@@ -1,0 +1,45 @@
+*,
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-clr: #db005b;
+    --primary-clr-200: #df1a6b;
+    --primary-clr-100: #e2337c;
+
+    /* --primary-clr: #861b63;
+    --primary-clr-200: #a14e86;
+    --primary-clr-100: #bc81a9; */
+
+    --secondary-clr: #f6635c;
+    --secondary-clr-200: #f8827d;
+    --secondary-clr-100: hsl(2, 90%, 93%);
+    --max-width: 65rem;
+    /* --primary-clr: #ad0f34;
+    --primary-clr-200: #cf5571;
+    --primary-clr-100: hsl(346, 56%, 75%); */
+
+    --padding-y: 0.75rem;
+    --padding-x: 0.75rem;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "Segoe UI";
+}
+
+.container {
+    width: 100%;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: 2rem;
+}
+
+button,
+.btn {
+    cursor: pointer;
+}

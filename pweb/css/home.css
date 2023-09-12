@@ -1,0 +1,87 @@
+body {
+    background-image: url("../assets/login-banner.svg");
+    background-size: cover;
+}
+
+.head {
+    color: white;
+    margin-bottom: 0;
+}
+
+.btn {
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background-color: #eee;
+    text-decoration: none;
+    color: black;
+    transition: 0.3s ease;
+}
+
+.btn:hover {
+    opacity: 0.75;
+}
+
+.btn:first-child {
+    background-color: rgb(255 0 0 / 0.2);
+    border-color: rgb(255 0 0 / 0.5);
+}
+
+.action-tb {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    gap: 0.25rem;
+}
+
+table {
+    width: 100%;
+    margin-block: 1rem;
+    /* border-radius: 0.25rem; */
+    overflow: hidden;
+    box-shadow: 0 0 1rem rgb(0 0 0 / 0.5);
+    border-collapse: collapse;
+    width: 100%;
+    display: block;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: white;
+    overflow-x: scroll;
+    /* border: 4px solid white; */
+}
+
+tr:has(th) {
+    border-bottom-width: 2px;
+    border-color: rgb(0 0 0 / 0.5);
+    /* background-color: #eee; */
+    /* width: max-content; */
+    /* color: white; */
+}
+
+td {
+    text-align: center;
+}
+
+tr {
+    border-bottom: 1px solid rgb(0 0 0 / 0.3);
+}
+
+tr:not(:has(th)) {
+    background-color: white;
+}
+tr:not(:has(th)):nth-of-type(odd) {
+    background-color: rgb(246, 246, 255);
+}
+
+table :is(td, th) {
+    /* border: 1px solid black; */
+    padding: 0.5rem 1rem;
+}
+
+th {
+    font-weight: bold;
+    /* background-color: #ccc; */
+    /* text-transform: uppercase; */
+}

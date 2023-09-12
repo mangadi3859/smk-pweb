@@ -1,0 +1,199 @@
+body {
+    background-image: url("../assets/tambah-obat-banner.svg");
+    background-size: cover;
+    background-position: center center;
+    /* background-image: linear-gradient(to bottom left, var(--secondary-clr), var(--primary-clr-100)); */
+    background-repeat: no-repeat;
+}
+
+label {
+    position: relative;
+    font-weight: bold;
+    color: var(--primary-clr-200);
+}
+
+.form-content > label:has(+ .outer-input :is(.input)[required])::before {
+    content: "*";
+    color: black;
+}
+
+#form .error {
+    color: red;
+    font-size: 1rem;
+    opacity: 0.75;
+    border: 1px solid red;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    background-color: rgb(255 0 0 / 0.25);
+}
+
+#form {
+    margin-block: 5rem;
+    background-color: white;
+}
+
+body {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+}
+
+#form {
+    flex-direction: column;
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    gap: 1.5rem;
+    width: 35%;
+    border-radius: 0.5rem;
+    color: black;
+    overflow: hidden;
+    box-shadow: 0 0 5rem rgb(0 0 0 / 0.3);
+    border: 2px solid var(--primary-clr-100);
+    background-color: #ddd;
+}
+
+select::placeholder {
+    display: none;
+}
+
+label,
+.outer-input {
+    cursor: pointer;
+}
+
+select.input {
+    border: 2px solid #ccc;
+    width: 100%;
+    transition: 0.3s ease;
+}
+
+select.input:focus {
+    border: 2px solid #eee;
+}
+
+.outer-input {
+    background-color: #ccc;
+    border: 2px solid #b1b1b1;
+    width: 100%;
+    color: black;
+    border-radius: 0.25rem;
+    outline: none;
+    transition: 0.3s ease;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#form [class^="fa"] {
+    transition: 0.3s ease;
+}
+
+.input-icon {
+    position: relative;
+    display: block;
+    margin-left: 1rem;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.outer-input:not(:has(.input[readonly])):focus-within .input-icon > :is(.fa, .fas, .fab) {
+    color: var(--primary-clr);
+    opacity: 1;
+}
+
+.input-icon > :is(.fa, .fas, .fab) {
+    opacity: 0.5;
+    color: black;
+}
+
+.input {
+    padding: var(--padding-y) var(--padding-x);
+    width: 100%;
+    border: none;
+    outline-color: transparent !important;
+    border-width: 0;
+    outline-width: 0;
+    background-color: transparent;
+}
+
+.input::after {
+    display: none;
+}
+
+select:is(::before, ::after) {
+    display: none;
+}
+
+option {
+    padding: var(--padding-y) var(--padding-x);
+    outline: none;
+    border: none;
+}
+
+button {
+    transition: 0.3s ease;
+}
+
+:where(.outer-input, .input)::placeholder {
+    color: black;
+    opacity: 0.5;
+}
+
+#form button {
+    color: white;
+}
+
+#form button {
+    margin-top: 1rem;
+    /* padding: 0.5rem 2rem; */
+    padding: var(--padding-y) var(--padding-x);
+    background-color: var(--primary-clr-200);
+    outline: none;
+    border: none;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    font-size: 1.15rem;
+    text-transform: uppercase;
+}
+
+.outer-input:has(.input:not([readonly]):focus) {
+    background-color: #eee;
+    border-color: var(--primary-clr-200);
+}
+
+#form button:where(:focus, :hover) {
+    background-color: var(--primary-clr-100);
+    border-color: var(--primary-clr-200);
+    scale: 0.975;
+}
+
+#form .heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid var(--primary-clr-100);
+}
+
+#form .form-content {
+    display: flex;
+    padding: 2rem;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#form .title {
+    font-size: 1.75rem;
+    font-weight: bold;
+    text-align: center;
+    color: var(--primary-clr);
+}
+
+.outer-input:has(.input[readonly]),
+.input[readonly] {
+    /* pointer-events: none; */
+    cursor: not-allowed;
+    opacity: 0.5;
+    user-select: none;
+}

@@ -1,0 +1,121 @@
+body {
+    background-image: url("../assets/login-banner.svg");
+    background-size: cover;
+    background-position: center center;
+    /* background-image: linear-gradient(to bottom left, var(--secondary-clr), var(--primary-clr-100)); */
+    background-repeat: no-repeat;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-container {
+    width: 50%;
+    background-color: rgb(255 255 255 / 0.4);
+    backdrop-filter: blur(1rem);
+    /* height: 40rem; */
+}
+
+#form {
+    background-color: white;
+    backdrop-filter: blur(1rem);
+    padding: 2rem 2rem;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 100%;
+    max-width: 30rem;
+}
+
+.outer-input {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #ccc;
+    gap: 1rem;
+    border-radius: 0.15rem;
+    padding: var(--padding-y) var(--padding-x);
+    transition: 0.3s ease;
+}
+
+.outer-input:has(.input:focus) {
+    background-color: var(--secondary-clr-100);
+    border: 2px solid var(--secondary-clr-200);
+}
+
+.input-group > label:has(+ .outer-input .input[required])::before {
+    content: "*";
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--secondary-clr);
+}
+
+.input-icon {
+    color: var(--primary-clr-200);
+    transition: 0.3s ease;
+}
+
+.input-icon:has(+ .input:focus) {
+    color: black;
+}
+
+.input {
+    width: 100%;
+    background-color: transparent !important;
+    outline: none !important;
+    border: transparent !important;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-group label {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#form .title {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: center;
+    margin: 0;
+    /* margin-top: 1rem; */
+    margin-bottom: -1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid rgb(0 0 0 / 0.5);
+}
+
+#form button {
+    padding: var(--padding-y) var(--padding-x);
+    border: none;
+    outline: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    background-color: var(--secondary-clr);
+}
+
+.btn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}

@@ -41,7 +41,7 @@ try {
     $query = "INSERT INTO auth VALUE ('$token', '{$data[0]['idkaryawan']}', '{$data[0]['username']}', CURRENT_TIMESTAMP + $SESSION_EXPIRES)";
     queryData($conn, $query);
 
-    $query = "SELECT * FROM tb_login WHERE username = '$username'";
+    $query = "SELECT username, email, idkaryawan, leveluser FROM tb_login WHERE username = '$username'";
     $data = queryData($conn, $query);
 
     $_SESSION["auth"] = $token;

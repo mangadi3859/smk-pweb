@@ -2,11 +2,25 @@
 require_once "utils/conn.php";
 
 $query = "SELECT idobat, perusahaan, namaobat, kategoriobat, hargajual, 
-hargabeli, stok_obat, tbobat.keterangan AS keterangan
+hargabeli, stok_obat, tbobat.keterangan AS keterangan, 
+tb_detail_transaksi.iddetailtransaksi AS is_used
 FROM `tbobat` INNER JOIN tb_supplier 
-ON tb_supplier.idsupplier = tbobat.idsupplier";
+USING(idsupplier)
+LEFT JOIN tb_detail_transaksi USING(idobat);";
+
+// $query = "SELECT idobat, perusahaan, namaobat, kategoriobat, hargajual, 
+// hargabeli, stok_obat, tbobat.keterangan AS keterangan, 
+// CASE 
+// WHEN tb_detail_transaksi.iddetailtransaksi IS NOT NULL 
+//     THEN 1
+//     ELSE 0
+// END AS is_used
+// FROM `tbobat` INNER JOIN tb_supplier 
+// USING(idsupplier)
+// LEFT JOIN tb_detail_transaksi USING(idobat);";
 
 $sql = queryData($conn, $query);
+
 
 ?>
 
@@ -28,7 +42,8 @@ $sql = queryData($conn, $query);
         echo "<h1 class='head'>";
         echo isAuth($conn) ? "SUDAH LOGIN" : "BELUM LOGIN";
         echo "</h1>";
-        echo isAuth($conn) ? "" : "<a style='color: aqua;' href='login.php'>Login Here</a>";
+        echo isAuth($conn) ? "<a style='color: aqua;' href='logout.php'>Logout</a>" : "<a style='color: aqua;' href='login.php'>Login Here</a>";
+
         ?>
         <table>
             <thead>
@@ -48,15 +63,19 @@ $sql = queryData($conn, $query);
                     echo "<tr>";
                     $inner = "";
 
+                    $is_used = array_pop($data) != NULL;
+                    $attr_btn = $is_used ? "pointer-events: none; cursor: not-allowed; opacity: 0.5;" : "";
+
                     foreach ($data as $val) {
                         $inner = $inner . "<td>" . $val . "</td>";
                     }
+
 
                     echo $inner;
                     echo <<<act
                     <td>
                         <div class='action-tb'>
-                            <a class='btn' href='api/delete-obat.php?id={$data['idobat']}'>DELETE</a>
+                            <a style="$attr_btn" class='btn' href='api/delete-obat.php?id={$data['idobat']}'>DELETE</a>
                             <a class='btn' href='edit-obat.php?id={$data['idobat']}'>EDIT</a>
                         </div>
                     </td> 

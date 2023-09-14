@@ -19,7 +19,8 @@ body {
 }
 
 .btn:hover {
-    opacity: 0.75;
+    box-shadow: 0 0 1rem 0 rgb(0 0 0 / 0.3);
+    transform: scale(1.05);
 }
 
 .btn:first-child {

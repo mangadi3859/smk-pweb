@@ -7,7 +7,7 @@ $DB_USER = 'root';
 $DB_PASSWORD = '';
 $DB_NAME = 'apotek';
 $COOKIE_KEY = 'apotek-';
-$SESSION_EXPIRES = 60000; // 1 minutes
+$SESSION_EXPIRES = 60 * 60 * 12; //12 Jam
 $conn;
 
 try {
@@ -52,6 +52,9 @@ function isAuth(mysqli $conn): bool
         $data = queryData($conn, $query);
 
         $_SESSION["user"] = $data[0];
+
+        if (!isset($_SESSION["auth"]))
+            $_SESSION["auth"] = $_COOKIE["auth"];
     }
 
     return true;

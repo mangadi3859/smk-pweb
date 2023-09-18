@@ -6,8 +6,10 @@ if (!isAuth($conn)) {
     exit();
 }
 
+$redirect = isset($_GET["redirect"]) ? $_GET["redirect"] : NULL;
+
 $query = "DELETE FROM auth WHERE token = '{$_SESSION['auth']}'";
 queryData($conn, $query);
 session_destroy();
 
-header("Location: login.php");
+header("Location: login.php?redirect=$redirect");

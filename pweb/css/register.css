@@ -70,7 +70,7 @@ body {
 
 .input {
     width: 100%;
-    /* background-color: transparent !important; */
+    background-color: transparent !important;
     outline: none !important;
     border: transparent !important;
 }

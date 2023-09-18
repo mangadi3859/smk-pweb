@@ -1,8 +1,8 @@
 <?php
-require_once "../utils/conn.php";
+require_once "../../utils/conn.php";
 
 
-$BACK_URL = "../tambah-obat.php";
+$BACK_URL = "../add.php";
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     header("Location: $BACK_URL");
@@ -51,17 +51,17 @@ if ($stock < 0) {
     header("Location: {$BACK_URL}?err=Data stock obat harus lebih besar atau sama dengan 0");
 }
 
-$query = "SELECT * FROM tbobat WHERE idobat = '$id_obat'";
+$query = "SELECT idobat FROM tbobat WHERE idobat = '$id_obat'";
 $data = queryData($conn, $query);
 
-if (sizeof($data) > 0) {
-    header("Location: {$BACK_URL}?err=ID obat sudah ada");
+if (!empty($data)) {
+    header("Location: {$BACK_URL}?err=ID obat sudah terdaftar");
 }
 
-$query = "SELECT * FROM tb_supplier WHERE idsupplier = '$id_supplier'";
+$query = "SELECT idsupplier FROM tb_supplier WHERE idsupplier = '$id_supplier'";
 $data = queryData($conn, $query);
 
-if (sizeof($data) < 1) {
+if (empty($data)) {
     header("Location: {$BACK_URL}?err=ID supplier tidak terdaftar");
 }
 

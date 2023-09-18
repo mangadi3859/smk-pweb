@@ -21,11 +21,11 @@ if (!isset($username) || !isset($password))
 
 $username = strtolower(trim($_POST["username"]));
 
-$query = "SELECT * FROM tb_login WHERE username = '$username' OR email = '$username'";
+$query = "SELECT `password`, idkaryawan, username FROM tb_login WHERE username = '$username' OR email = '$username'";
 $data = queryData($conn, $query);
 
 if (empty($data))
-    return header("Location: {$BACK_URL}?err=Username salah $username");
+    return header("Location: {$BACK_URL}?err=Username salah");
 
 
 if (!password_verify($password, $data[0]["password"]))
@@ -38,7 +38,7 @@ $query = "DELETE FROM auth WHERE idkaryawan = {$data[0]['idkaryawan']}";
 queryData($conn, $query);
 
 try {
-    $query = "INSERT INTO auth VALUE ('$token', '{$data[0]['idkaryawan']}', '{$data[0]['username']}', CURRENT_TIMESTAMP + $SESSION_EXPIRES)";
+    $query = "INSERT INTO auth VALUE ('$token', '{$data[0]['idkaryawan']}', '{$data[0]['username']}', CURRENT_TIMESTAMP + INTERVAL $SESSION_EXPIRES SECOND)";
     queryData($conn, $query);
 
     $query = "SELECT username, email, idkaryawan, leveluser FROM tb_login WHERE username = '$username'";
@@ -52,7 +52,7 @@ try {
     global $redirect;
     return header("Location: " . (!empty($redirect) ? $redirect : "../index.php"));
 } catch (Exception $e) {
-    header("Location: {$BACK_URL}?err={$e->getMessage()}");
+    header("Location: {$BACK_URL}?err=Server Error: {$e->getMessage()}");
 }
 
 // echo json_encode($data);

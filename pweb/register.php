@@ -1,8 +1,11 @@
 <?php
 require_once "utils/conn.php";
 
+$err = $_GET["err"] ?? NULL;
+$idkaryawan = $_GET["k"] ?? "";
+$ignoreAuth = $_GET["ignoreAuth"] ?? NULL;
 $redirect = isset($_GET["redirect"]) ? $_GET["redirect"] : NULL;
-if (isAuth($conn)) {
+if (isAuth($conn) && !isset($ignoreAuth)) {
     header("Location: " . (isset($redirect) ? $redirect : "index.php"));
 }
 ?>
@@ -26,8 +29,9 @@ if (isAuth($conn)) {
 </head>
 
 <body>
-    <form action="api/register.php?redirect<?= isset($redirect) ? "=" . $redirect : "" ?>" method="POST"
-        enctype="application/x-www-form-urlencoded" id="form">
+    <form
+        action="api/register.php?<?= isset($ignoreAuth) ? "ignoreAuth&" : "" ?>redirect<?= isset($redirect) ? "=" . $redirect : "" ?>"
+        method="POST" enctype="application/x-www-form-urlencoded" id="form">
         <!-- <div class="heading">
             <p class="title">Register</p>
         </div>
@@ -67,8 +71,8 @@ if (isAuth($conn)) {
                 <label for="i-id">Kode Karyawan</label>
                 <div class="outer-input">
                     <label for="i-id" class="fa fas fa-newspaper input-icon"></label>
-                    <input autocomplete="off" class="input" type="text" name="idkaryawan" required
-                        placeholder="Kode Karyawan" id="i-id">
+                    <input autocomplete="off" value="<?= $idkaryawan ?>" class="input" type="text" name="idkaryawan"
+                        required placeholder="Kode Karyawan" id="i-id">
                 </div>
             </div>
 

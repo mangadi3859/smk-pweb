@@ -1,10 +1,25 @@
 <?php
-require_once "utils/conn.php";
+require_once "../utils/conn.php";
 
 $sql = "SELECT * FROM `tb_supplier`";
 $supplier = queryData($conn, $sql);
 
 $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
+$id = (int) $_GET["id"];
+
+if (!isset($id) || is_nan($id)) {
+    header("Location: index.php");
+    exit();
+}
+
+$obat = queryData($conn, "SELECT * FROM tbobat WHERE idobat = '$id'");
+
+if (empty($obat)) {
+    header("Location: index.php");
+    exit();
+}
+
+$obat = $obat[0];
 
 ?>
 
@@ -16,29 +31,31 @@ $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Obat</title>
+    <title>Edit Obat</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="css/fontawesome/css/all.min.css">
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/add-obat.css">
+    <link rel="stylesheet" href="../css/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/add-obat.css">
 
     <!-- JS -->
-    <script src="js/global.js" defer></script>
+    <script src="../js/global.js" defer></script>
+    <script src="../js/edit-obat.js" defer></script>
 </head>
 
 <body>
-    <form id="form" action="api/tambah-obat.php" method="POSt">
+    <form id="form" action="api/edit.php" method="POST">
         <div class="heading">
-            <p class="title">TAMBAH OBAT</p>
+            <p class="title">EDIT OBAT</p>
         </div>
         <div class="form-content">
-            <label for="i-idobat">ID Obat</label>
+            <label for="i-idobat">ID Obat (READ ONLY)</label>
             <div class="outer-input">
                 <div class="input-icon">
                     <label for="i-idobat" class="fas fa-tablets"></label>
                 </div>
-                <input class="input" max="9999" autocomplete="off" data-number-only-input type="text" id="i-idobat"
-                    name="id_obat" regex="^\d+$" placeholder="ID Obat (AUTO_INCREMENT)">
+                <input required class="input" max="9999" autocomplete="off" data-number-only-input type="text"
+                    id="i-idobat" name="id_obat" regex="^\d+$" placeholder="ID Obat (AUTO_INCREMENT)" value="<?= $id ?>"
+                    readonly>
             </div>
 
             <label for="i-idsupplier">ID Supplier</label>
@@ -47,7 +64,8 @@ $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
                     <label for="i-idsupplier" class="fas fa-id-card"></label>
                 </div>
                 <!-- <input type="text" class="input"> -->
-                <select class="input" required id="i-idsupplier" name="id_supplier">
+                <select class="input" required id="i-idsupplier" name="id_supplier"
+                    data-value="<?= $obat["idsupplier"] ?>">
                     <option value="">Pilih perusahaan</option>
                     <?php
                     foreach ($supplier as $data) {
@@ -67,7 +85,7 @@ placeholder="ID Obat"> -->
                     <label for="i-nama" class="fas fa-pills"></label>
                 </div>
                 <input class="input" autocapitalize="on" autocomplete="off" required type="text" id="i-nama" name="nama"
-                    placeholder="Nama Obat">
+                    value="<?= $obat["namaobat"] ?>" placeholder="Nama Obat">
             </div>
 
             <label for="i-co">Kategori Obat</label>
@@ -75,8 +93,8 @@ placeholder="ID Obat"> -->
                 <div class="input-icon">
                     <label for="i-co" class="fa fa-file"></label>
                 </div>
-                <input autocapitalize class="input" autocomplete="off" required type="text" id="i-co" name="kategori"
-                    placeholder="Kategori Obat">
+                <input value="<?= $obat["kategoriobat"] ?>" autocapitalize class="input" autocomplete="off" required
+                    type="text" id="i-co" name="kategori" placeholder="Kategori Obat">
             </div>
 
             <label for="i-jual">Harga Jual</label>
@@ -84,7 +102,8 @@ placeholder="ID Obat"> -->
                 <div class="input-icon">
                     <label for="i-jual" class="fas fa-money-bill-trend-up"></label>
                 </div>
-                <input min="1000" class="input" required type="number" id="i-jual" name="jual" placeholder="Harga Jual">
+                <input value="<?= $obat["hargajual"] ?>" min="1000" class="input" required type="number" id="i-jual"
+                    name="jual" placeholder="Harga Jual">
             </div>
 
             <label for="i-beli">Harga Beli</label>
@@ -92,7 +111,8 @@ placeholder="ID Obat"> -->
                 <div class="input-icon">
                     <label for="i-beli" class="fa fa-sack-dollar"></label>
                 </div>
-                <input min="0" class="input" required type="number" id="i-beli" name="beli" placeholder="Harga Beli">
+                <input value="<?= $obat["hargabeli"] ?>" min="0" class="input" required type="number" id="i-beli"
+                    name="beli" placeholder="Harga Beli">
             </div>
 
             <label for="i-stock">Stock Obat</label>
@@ -100,12 +120,13 @@ placeholder="ID Obat"> -->
                 <div class="input-icon">
                     <label for="i-stock" class="fas fa-cubes"></label>
                 </div>
-                <input min="0" class="input" required type="number" id="i-stock" name="stock" placeholder="Stock Obat">
+                <input value="<?= $obat["stok_obat"] ?>" min="0" class="input" required type="number" id="i-stock"
+                    name="stock" placeholder="Stock Obat">
             </div>
             <label for="i-ket">Keterangan</label>
             <div class="outer-input">
                 <textarea class="input" required name="keterangan" id="i-ket" placeholder="Keterangan" cols="30"
-                    rows="10"></textarea>
+                    rows="10"><?= $obat["keterangan"] ?></textarea>
             </div>
 
             <?php
@@ -115,7 +136,7 @@ placeholder="ID Obat"> -->
 
             ?>
 
-            <button type="submit">Submit</button>
+            <button type="submit">EDIT</button>
         </div>
     </form>
 </body>

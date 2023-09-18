@@ -8,4 +8,45 @@
     <body>
         <main>Content</main>
     </body>
+
+    <script>
+        //code
+
+        function simulate(entries) {
+            let _en = [...entries];
+            let entries2 = [];
+
+            while (_en.length) {
+                entries2.push(_en.splice(0, 8));
+            }
+
+            entries2 = entries2.reduce((pre, now, i) => {
+                let x = now[3];
+                let t = [now[0], now[7]];
+
+                if (now.length != 8) {
+                    now = now.map((e) => 0);
+                    if (x) now[3] = x;
+                    if (t[0]) now[0] = t[0];
+                    if (t[1]) now[7] = t[1];
+                    return [...pre, ...now];
+                }
+
+                now = now.map((e, i) => {
+                    if (i == 3 || i == 0 || i == 7) return e;
+                    if (e < x) return 0;
+                    return e;
+                });
+
+                return [...pre, ...now];
+            }, []);
+
+            return entries2;
+        }
+
+        const records = [1, 2, 0, 5, 0, 2, 4, 3, 3, 3];
+        console.log(simulate(records));
+        // Expected output
+        // [1, 0, 0, 5, 0, 0, 0, 3, 3, 0]
+    </script>
 </html>

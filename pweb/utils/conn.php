@@ -40,11 +40,13 @@ function isAuth(mysqli $conn): bool
 {
     if (!isset($_SESSION["auth"]) && !isset($_COOKIE["auth"]))
         return false;
+
+
     $auth = $_SESSION["auth"] ?? $_COOKIE["auth"];
-    $query = "SELECT * FROM auth WHERE token = '$auth' AND expires > CURRENT_TIMESTAMP";
+    $query = "SELECT username, token, idkaryawan FROM auth WHERE token = '$auth' AND expires > CURRENT_TIMESTAMP";
     $data = queryData($conn, $query);
 
-    if (sizeof($data) < 1)
+    if (empty($data))
         return false;
 
     if (!isset($_SESSION["user"]) || $_SESSION["user"]["idkaryawan"] != $data[0]["idkaryawan"]) {

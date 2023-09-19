@@ -40,6 +40,7 @@ $data = $data[0];
     <!-- JS -->
     <script src="../js/global.js" defer></script>
     <script src="../js/edit-obat.js" defer></script>
+    <script src="../js/add-pelanggan.js" defer></script>
 </head>
 
 <body>
@@ -93,13 +94,17 @@ $data = $data[0];
                     autocomplete="off" required type="text" id="i-age" name="usia" placeholder="Usia">
             </div>
 
-            <label for="i-age">Bukti Foto</label>
+            <label for="i-file">Bukti Foto</label>
             <div class="outer-input">
                 <div class="input-icon">
-                    <label for="i-age" class="fas fa-file-image"></label>
+                    <label for="i-file" class="fas fa-file-image"></label>
                 </div>
-                <input value="<?= $data["buktifotoresep"] ?>" class="input" required type="file"
-                    accept="image/png, image/jpg, image/jpeg" id="i-file" name="file">
+                <input accept="image/png, image/jpg, image/jpeg" data-file-input class="input" type="file">
+                <input data-true-file readonly hidden name="file" type="text" value="">
+            </div>
+
+            <div class="preview">
+                <img src="<?= $data["buktifotoresep"]; ?>" data-img-preview />
             </div>
 
             <?php

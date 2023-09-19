@@ -118,6 +118,10 @@ select.input:focus {
     background-color: transparent;
 }
 
+.input::-webkit-file-upload-button {
+    display: none;
+}
+
 .input::after {
     display: none;
 }
@@ -196,4 +200,24 @@ button {
     cursor: not-allowed;
     opacity: 0.5;
     user-select: none;
+}
+
+.preview {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background-color: #eee;
+    border: 2px dashed #b1b1b1;
+    border-radius: 0.25rem;
+    /* max-width: 100%; */
+    /* aspect-ratio: 1 / 1; */
+}
+
+.preview [data-img-preview] {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    margin-block: 1rem;
+    width: 50%;
+    height: auto;
+    object-fit: contain;
 }

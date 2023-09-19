@@ -13,10 +13,10 @@ $nama = $_POST["nama"] ?? NULL;
 $alamat = $_POST["alamat"] ?? NULL;
 $telp = $_POST["telp"] ?? NULL;
 $usia = (int) ($_POST["usia"] ?? NULL);
-$image = $_POST["file"] ?? NULL;
+$image = $_FILES["file"] ?? NULL;
 
 
-if (!isset($nama) || !isset($usia) || !isset($image) || !isset($alamat) || !isset($telp)) {
+if (!isset($nama) || !isset($usia) || !isset($image) || !isset($image["tmp_name"]) || !isset($alamat) || !isset($telp)) {
     header("Location: {$BACK_URL}?err=Data tidak lengkap");
 }
 
@@ -24,7 +24,8 @@ if (is_nan((int) $telp) || is_nan($usia)) {
     header("Location: {$BACK_URL}?err=Data tidak valid");
 }
 
-$query = "INSERT INTO tb_pelanggan VALUE (NULL, '$nama', '$alamat', '$telp', $usia, '$image')";
+$base64_img = "data:{$image["type"]};base64," . base64_encode(file_get_contents($image["tmp_name"]));
+$query = "INSERT INTO tb_pelanggan VALUE (NULL, '$nama', '$alamat', '$telp', $usia, '$base64_img')";
 
 try {
     queryData($conn, $query);

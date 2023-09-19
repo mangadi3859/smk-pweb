@@ -56,6 +56,7 @@ $sql = queryData($conn, $query);
                     <th>Email</th>
                     <th>Alamat</th>
                     <th>Telp</th>
+                    <th>Actions</th>
                 </thead>
                 <tbody>
                     <?php

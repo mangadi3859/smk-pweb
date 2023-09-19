@@ -15,7 +15,7 @@ $telp = $_POST["telp"] ?? NULL;
 $usia = (int) ($_POST["usia"] ?? NULL);
 $image = $_POST["file"] ?? NULL;
 
-if (!isset($id) || !isset($nama) || !isset($usia) || !isset($image) || !isset($alamat) || !isset($telp)) {
+if (!isset($id) || !isset($nama) || !isset($usia) || !isset($alamat) || !isset($telp)) {
     header("Location: {$BACK_URL}?err=Data tidak lengkap");
 }
 
@@ -30,7 +30,9 @@ if (empty($data)) {
     header("Location: {$BACK_URL}?id=$id_obat&err=ID Pelanggan tidak terdaftar");
 }
 
-$query = "UPDATE tb_pelanggan SET namalengkap = '$nama', alamat = '$alamat', telp = '$telp', usia = $usia, buktifotoresep = '$image' WHERE idpelanggan = '$id'";
+$base64 = isset($image) && str_contains($image, ";base64,") ? ", buktifotoresep = '$image'" : "";
+
+$query = "UPDATE tb_pelanggan SET namalengkap = '$nama', alamat = '$alamat', telp = '$telp', usia = $usia $base64 WHERE idpelanggan = '$id'";
 
 try {
     queryData($conn, $query);

@@ -24,10 +24,11 @@ $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
 
     <!-- JS -->
     <script src="../js/global.js" defer></script>
+    <script src="../js/add-pelanggan.js" defer></script>
 </head>
 
 <body>
-    <form id="form" action="api/add.php" method="POST">
+    <form id="form" action="api/add.php" method="POST" enctype="multipart/form-data">
         <div class="heading">
             <p class="title">TAMBAH PELANGGAN</p>
         </div>
@@ -66,13 +67,17 @@ $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
                     id="i-age" name="usia" placeholder="Usia">
             </div>
 
-            <label for="i-age">Bukti Foto</label>
+            <label for="i-file">Bukti Foto</label>
             <div class="outer-input">
                 <div class="input-icon">
-                    <label for="i-age" class="fas fa-file-image"></label>
+                    <label for="i-file" class="fas fa-file-image"></label>
                 </div>
-                <input class="input" required type="file" accept="image/png, image/jpg, image/jpeg" id="i-file"
-                    name="file">
+                <input data-file-input class="input" required type="file" accept="image/png, image/jpg, image/jpeg"
+                    id="i-file" name="file">
+            </div>
+
+            <div class="preview">
+                <img style="display: none;" data-img-preview />
             </div>
 
             <?php

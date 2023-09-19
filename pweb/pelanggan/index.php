@@ -1,7 +1,7 @@
 <?php
 require_once "../utils/conn.php";
 
-$query = "SELECT tb_pelanggan.idpelanggan AS idpelanggan, namalengkap, alamat, telp, usia, buktifotoresep, tb_transaksi.idpelanggan AS is_used
+$query = "SELECT tb_pelanggan.idpelanggan AS idpelanggan, namalengkap, alamat, telp, usia, tb_transaksi.idpelanggan AS is_used
 FROM `tb_pelanggan` LEFT JOIN tb_transaksi 
 USING(idpelanggan)
 ORDER BY tb_pelanggan.idpelanggan ASC";
@@ -50,6 +50,7 @@ $sql = queryData($conn, $query);
                     <th>Nomer HP</th>
                     <th>Usia</th>
                     <th>Bukti Foto Resep</th>
+                    <th>Actions</th>
                 </thead>
                 <tbody>
                     <?php
@@ -59,11 +60,13 @@ $sql = queryData($conn, $query);
 
                         $is_used = array_pop($data);
                         $attr_btn = $is_used ? "pointer-events: none; cursor: not-allowed; opacity: 0.5;" : "";
+                        unset($data["buktifotoresep"]);
 
                         foreach ($data as $val) {
-                            $inner = $inner . "<td>" . $val . "</td>";
+                            $inner .= "<td>" . $val . "</td>";
                         }
 
+                        $inner .= "<td><a href='buktifoto.php?id={$data["idpelanggan"]}'>See Picture</a></td>";
                         echo $inner;
                         echo <<<act
                     <td>

@@ -103,9 +103,12 @@ $data = $data[0];
                 <input data-true-file readonly hidden name="file" type="text" value="">
             </div>
 
-            <div class="preview">
+            <label for="i-file" class="preview">
+                <div class="preview-overlay">
+                    <div>Upload Gambar</div>
+                </div>
                 <img src="<?= $data["buktifotoresep"]; ?>" data-img-preview />
-            </div>
+            </label>
 
             <?php
             if (isset($err)) {

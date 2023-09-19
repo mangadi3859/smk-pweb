@@ -27,7 +27,7 @@ inputFile.addEventListener("change", async (e) => {
         handleTrueInput(bufferedFile);
         imgPreview.parentNode.style.opacity = "1";
     } catch (e) {
-        alert("Error! buka console buat melihat error");
+        alert("Error! buka console untuk melihat error");
         console.error(e);
     }
 });
@@ -35,11 +35,7 @@ inputFile.addEventListener("change", async (e) => {
 function readFile64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader(file);
-
-        reader.onload = (e) => {
-            resolve(e.target.result);
-        };
-
+        reader.onload = (e) => resolve(e.target.result);
         reader.onerror = reject;
         reader.readAsDataURL(file);
     });

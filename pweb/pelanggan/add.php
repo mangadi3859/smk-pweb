@@ -76,9 +76,12 @@ $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
                     id="i-file" name="file">
             </div>
 
-            <div class="preview">
+            <label for="i-file" class="preview">
+                <div class="preview-overlay">
+                    <div>Upload Gambar</div>
+                </div>
                 <img style="display: none;" data-img-preview />
-            </div>
+            </label>
 
             <?php
             if (isset($err)) {

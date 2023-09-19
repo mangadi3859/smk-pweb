@@ -203,6 +203,7 @@ button {
 }
 
 .preview {
+    position: relative;
     display: grid;
     place-items: center;
     overflow: hidden;
@@ -211,6 +212,31 @@ button {
     border-radius: 0.25rem;
     /* max-width: 100%; */
     /* aspect-ratio: 1 / 1; */
+}
+
+.preview-overlay {
+    position: absolute;
+    pointer-events: none;
+    inset: 0;
+    background-color: rgb(0 0 0 / 0.5);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 200;
+    display: grid;
+    place-items: center;
+    z-index: 2;
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+.preview-overlay > div {
+    border: 1px solid white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+}
+
+.preview:where(:hover, :focus, :focus-within) .preview-overlay {
+    opacity: 1;
 }
 
 .preview [data-img-preview] {

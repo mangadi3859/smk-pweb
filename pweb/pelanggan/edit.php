@@ -99,7 +99,7 @@ $data = $data[0];
                 <div class="input-icon">
                     <label for="i-file" class="fas fa-file-image"></label>
                 </div>
-                <input accept="image/png, image/jpg, image/jpeg" data-file-input class="input" type="file">
+                <input accept="image/png, image/jpg, image/jpeg" id="i-file" data-file-input class="input" type="file">
                 <input data-true-file readonly hidden name="file" type="text" value="">
             </div>
 

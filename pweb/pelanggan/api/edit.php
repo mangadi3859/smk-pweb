@@ -33,7 +33,6 @@ if (empty($data)) {
 $base64 = isset($image) && str_contains($image, ";base64,") ? ", buktifotoresep = '$image'" : "";
 
 $query = "UPDATE tb_pelanggan SET namalengkap = '$nama', alamat = '$alamat', telp = '$telp', usia = $usia $base64 WHERE idpelanggan = '$id'";
-
 try {
     queryData($conn, $query);
     header("Location: ../");

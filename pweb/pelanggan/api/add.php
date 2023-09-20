@@ -24,7 +24,8 @@ if (is_nan((int) $telp) || is_nan($usia)) {
     header("Location: {$BACK_URL}?err=Data tidak valid");
 }
 
-$base64_img = "data:{$image["type"]};base64," . base64_encode(file_get_contents($image["tmp_name"]));
+$buffer_img = file_get_contents($image["tmp_name"]);
+$base64_img = "data:{$image["type"]};base64," . base64_encode($buffer_img);
 $query = "INSERT INTO tb_pelanggan VALUE (NULL, '$nama', '$alamat', '$telp', $usia, '$base64_img')";
 
 try {

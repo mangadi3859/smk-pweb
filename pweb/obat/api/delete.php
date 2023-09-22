@@ -12,11 +12,13 @@ $id = (int) $_GET['id'];
 
 if (!isset($id) || is_nan($id)) {
     header("Location: " . $BACK_URL);
+    exit;
 }
 
 $query = "SELECT idobat FROM tb_detail_transaksi WHERE idobat = $id";
 if (!empty(queryData($conn, $query))) {
     header("Location: " . $BACK_URL);
+    exit;
 }
 
 try {

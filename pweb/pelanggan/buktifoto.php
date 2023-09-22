@@ -4,14 +4,14 @@ require_once "../utils/conn.php";
 $id = $_GET["id"] ?? NULL;
 
 if (!isset($id))
-    header("Location: ./");
+    exit(header("Location: ./"));
 
 
 $query = "SELECT namalengkap, buktifotoresep AS data64 FROM tb_pelanggan WHERE idpelanggan = '$id'";
 $sql = queryData($conn, $query);
 
 if (empty($sql))
-    header("Location: ./");
+    exit(header("Location: ./"));
 
 $data = $sql[0];
 ?>

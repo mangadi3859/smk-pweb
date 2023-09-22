@@ -6,6 +6,7 @@ $BACK_URL = "../add.php";
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     header("Location: $BACK_URL");
+    exit;
 }
 
 // $id_karyawan = (int) ($_POST["id_karyawan"] ?? NULL);
@@ -15,10 +16,12 @@ $telp = $_POST["telp"] ?? NULL;
 
 if (!isset($alamat) || !isset($telp)) {
     header("Location: {$BACK_URL}?err=Data tidak lengkap");
+    exit;
 }
 
 if (is_nan((int) $telp)) {
     header("Location: {$BACK_URL}?err=Data tidak valid");
+    exit;
 }
 
 $query = "INSERT INTO tb_karyawan VALUE (NULL, '$alamat', '$telp')";

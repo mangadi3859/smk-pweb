@@ -9,14 +9,14 @@ $id = (int) $_GET["id"];
 
 if (!isset($id) || is_nan($id)) {
     header("Location: index.php");
-    exit();
+    exit;
 }
 
 $obat = queryData($conn, "SELECT * FROM tbobat WHERE idobat = '$id'");
 
 if (empty($obat)) {
     header("Location: index.php");
-    exit();
+    exit;
 }
 
 $obat = $obat[0];

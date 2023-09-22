@@ -16,15 +16,19 @@ try {
 } catch (Exception $err) {
     echo ($err);
     echo (mysqli_connect_error());
-    exit();
+    exit;
 }
 
 function queryData(mysqli $conn, string $query): array
 {
     $sql = mysqli_query($conn, $query);
     $data = [];
-    if ($conn->error)
-        throw new Exception($conn->error);
+    if ($conn->error || mysqli_error($conn))
+        throw new Exception($conn->error ?? mysqli_error($conn));
+
+    if ($conn->errno == 2006) {
+        throw new Exception("Sending too big packages.");
+    }
 
     if (!isset($sql->num_rows) || $sql->num_rows < 1)
         return [];

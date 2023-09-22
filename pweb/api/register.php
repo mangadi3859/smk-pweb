@@ -5,7 +5,7 @@ $BACK_URL = "../register.php";
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     echo "Unauthorized method.";
-    exit();
+    exit;
 }
 
 $ignoreAuth = $_GET["ignoreAuth"] ?? NULL;
@@ -27,7 +27,7 @@ $query = "SELECT idkaryawan FROM tb_karyawan WHERE idkaryawan = '$idkaryawan'";
 $karyawan = queryData($conn, $query);
 
 if (empty($karyawan)) {
-    header("Location: $BACK_URL?err=Kode karyawan tidak terdaftar");
+    exit(header("Location: $BACK_URL?err=Kode karyawan tidak terdaftar"));
 }
 
 $query = "SELECT username FROM tb_login WHERE username = '$username' OR idkaryawan = '$idkaryawan'";
@@ -35,7 +35,7 @@ $userdata = queryData($conn, $query);
 
 if (!empty($userdata)) {
     header("Location: $BACK_URL?err=User ini sudah terdaftar");
-    exit();
+    exit;
 }
 
 $query = "INSERT INTO `tb_login` VALUE ('$username', '$email', '$hashed', $idkaryawan, 0)";
@@ -44,10 +44,11 @@ try {
     $redirect = isset($_GET["redirect"]) ? $_GET["redirect"] : NULL;
 
     $logindata = queryData($conn, $query);
-    return header("Location: " . (empty($redirect) ? "../login.php" : $redirect));
+    header("Location: " . (empty($redirect) ? "../login.php" : $redirect));
+    exit;
 } catch (Exception $e) {
     echo "Server Error: " . $e->getMessage();
-    exit();
+    exit;
 }
 
 

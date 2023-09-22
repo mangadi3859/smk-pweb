@@ -4,6 +4,7 @@ require_once "utils/conn.php";
 $redirect = isset($_GET["redirect"]) ? $_GET["redirect"] : NULL;
 if (isAuth($conn)) {
     header("Location: " . (isset($redirect) ? $redirect : "index.php"));
+    exit;
 }
 
 $err = isset($_GET["err"]) ? $_GET["err"] : NULL;

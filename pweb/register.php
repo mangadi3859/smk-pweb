@@ -7,6 +7,7 @@ $ignoreAuth = $_GET["ignoreAuth"] ?? NULL;
 $redirect = isset($_GET["redirect"]) ? $_GET["redirect"] : NULL;
 if (isAuth($conn) && !isset($ignoreAuth)) {
     header("Location: " . (isset($redirect) ? $redirect : "index.php"));
+    exit;
 }
 ?>
 

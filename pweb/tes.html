@@ -4,49 +4,87 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Website - Gerawana</title>
-    </head>
-    <body>
-        <main>Content</main>
-    </body>
-
-    <script>
-        //code
-
-        function simulate(entries) {
-            let _en = [...entries];
-            let entries2 = [];
-
-            while (_en.length) {
-                entries2.push(_en.splice(0, 8));
+        <style>
+            * {
+                box-sizing: border-box;
             }
 
-            entries2 = entries2.reduce((pre, now, i) => {
-                let x = now[3];
-                let t = [now[0], now[7]];
+            body {
+                padding: 0;
+                margin: 0;
+                height: 75vh;
+            }
 
-                if (now.length != 8) {
-                    now = now.map((e) => 0);
-                    if (x) now[3] = x;
-                    if (t[0]) now[0] = t[0];
-                    if (t[1]) now[7] = t[1];
-                    return [...pre, ...now];
+            #canvas {
+                width: 100%;
+                height: 100%;
+                background-color: #eee;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+    </body>
+
+    <script defer>
+        //code
+        const canvas = document.querySelector("#canvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientHeight;
+        let rad1 = Math.PI * 2;
+        let rad2 = Math.PI;
+        let time = 0;
+        let reverse = false;
+        let hex = 0;
+        let maxHex = parseInt("fff", 16);
+
+        function draw(timestamp) {
+            let frameDelay = timestamp - time;
+            let color = hex.toString(16);
+            time = timestamp;
+            if (++hex >= maxHex) hex = 0;
+            console.log(`#${color.split("").join("f")}f`);
+
+            if (reverse) {
+                rad2 = rad2 - frameDelay / 1000;
+                if (rad2 < Math.PI) {
+                    rad2 = Math.PI;
+                    reverse = false;
                 }
+            } else {
+                rad2 = rad2 + frameDelay / 1000;
+                if (rad2 > Math.PI * 2) {
+                    rad2 = Math.PI * 2;
+                    reverse = true;
+                }
+            }
 
-                now = now.map((e, i) => {
-                    if (i == 3 || i == 0 || i == 7) return e;
-                    if (e < x) return 0;
-                    return e;
-                });
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = `#${color.split("").join("f")}f`;
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2 - 10, canvas.height - 10);
+            ctx.arc(canvas.width / 2 - 10, canvas.height - 10, canvas.width / 4 - 10, Math.PI, rad2);
+            ctx.lineTo(canvas.width / 2 - 10, canvas.height - 10);
+            ctx.fill();
+            ctx.stroke();
+            ctx.closePath();
 
-                return [...pre, ...now];
-            }, []);
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "black";
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2 - 10, canvas.height - 10, 10, Math.PI, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
 
-            return entries2;
+            window.requestAnimationFrame(draw);
         }
 
-        const records = [1, 2, 0, 5, 0, 2, 4, 3, 3, 3];
-        console.log(simulate(records));
-        // Expected output
-        // [1, 0, 0, 5, 0, 0, 0, 3, 3, 0]
+        //draw();
+        window.requestAnimationFrame(draw);
     </script>
 </html>

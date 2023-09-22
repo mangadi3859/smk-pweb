@@ -3,7 +3,7 @@ require_once "utils/conn.php";
 
 if (!isAuth($conn)) {
     header("Location: index.php");
-    exit();
+    exit;
 }
 
 $redirect = isset($_GET["redirect"]) ? $_GET["redirect"] : NULL;

@@ -6,6 +6,7 @@ $BACK_URL = "../add.php";
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     header("Location: $BACK_URL");
+    exit;
 }
 
 // $id_karyawan = (int) ($_POST["id_karyawan"] ?? NULL);
@@ -18,10 +19,18 @@ $image = $_FILES["file"] ?? NULL;
 
 if (!isset($nama) || !isset($usia) || !isset($image) || !isset($image["tmp_name"]) || !isset($alamat) || !isset($telp)) {
     header("Location: {$BACK_URL}?err=Data tidak lengkap");
+    exit;
+}
+
+$image_size = $image["size"] / 1024 / 1024 * 1.3;
+if ($image_size > 2) {
+    header("Location: {$BACK_URL}?id=$id_obat&err=Gambar terlalu besar");
+    exit;
 }
 
 if (is_nan((int) $telp) || is_nan($usia)) {
     header("Location: {$BACK_URL}?err=Data tidak valid");
+    exit;
 }
 
 $buffer_img = file_get_contents($image["tmp_name"]);

@@ -9,14 +9,14 @@ $id = (int) $_GET["id"];
 
 if (!isset($id) || is_nan($id)) {
     header("Location: index.php");
-    exit();
+    exit;
 }
 
 $data = queryData($conn, "SELECT * FROM tb_karyawan WHERE idkaryawan = '$id'");
 
 if (empty($data)) {
     header("Location: index.php");
-    exit();
+    exit;
 }
 
 $data = $data[0];

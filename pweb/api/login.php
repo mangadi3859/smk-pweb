@@ -7,17 +7,19 @@ $BACK_URL = "../login.php";
 
 if (isAuth($conn)) {
     header("Location: " . (isset($redirect) ? $redirect : "../index.php"));
+    exit;
 }
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     header("Location: " . $BACK_URL);
+    exit;
 }
 
 $username = $_POST["username"];
 $password = $_POST["password"];
 
 if (!isset($username) || !isset($password))
-    header("Location: {$BACK_URL}?err=Data tidak lengkap");
+    exit(header("Location: {$BACK_URL}?err=Data tidak lengkap"));
 
 $username = strtolower(trim($_POST["username"]));
 
@@ -25,11 +27,11 @@ $query = "SELECT `password`, idkaryawan, username FROM tb_login WHERE username =
 $data = queryData($conn, $query);
 
 if (empty($data))
-    return header("Location: {$BACK_URL}?err=Username salah");
+    exit(header("Location: {$BACK_URL}?err=Username salah"));
 
 
 if (!password_verify($password, $data[0]["password"]))
-    return header("Location: {$BACK_URL}?err=Password salah");
+    exit(header("Location: {$BACK_URL}?err=Password salah"));
 
 $token = generateToken((int) $data[0]["idkaryawan"], 32);
 // $query = "SELECT * FROM auth WHERE idkaryawan = '{$data[0]['idkaryawan']}'";

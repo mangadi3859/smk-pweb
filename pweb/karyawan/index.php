@@ -1,7 +1,7 @@
 <?php
 require_once "../utils/conn.php";
 
-$query = "SELECT tb_karyawan.idkaryawan AS idkaryawan, tb_login.username AS username, tb_login.email AS email, alamat, telp, 
+$query = "SELECT tb_karyawan.idkaryawan AS idkaryawan, tb_karyawan.nama AS nama, tb_login.username AS username, tb_login.email AS email, alamat, telp, 
 CASE
     WHEN tb_login.idkaryawan IS NOT NULL OR auth.idkaryawan IS NOT NULL
     THEN 1
@@ -12,17 +12,6 @@ USING(idkaryawan)
 LEFT JOIN auth 
 USING(idkaryawan) 
 ORDER BY tb_karyawan.idkaryawan ASC";
-
-// $query = "SELECT idobat, perusahaan, namaobat, kategoriobat, hargajual, 
-// hargabeli, stok_obat, tbobat.keterangan AS keterangan, 
-// CASE 
-// WHEN tb_detail_transaksi.iddetailtransaksi IS NOT NULL 
-//     THEN 1
-//     ELSE 0
-// END AS is_used
-// FROM `tbobat` INNER JOIN tb_supplier 
-// USING(idsupplier)
-// LEFT JOIN tb_detail_transaksi USING(idobat);";
 
 $sql = queryData($conn, $query);
 ?>
@@ -52,6 +41,7 @@ $sql = queryData($conn, $query);
             <table>
                 <thead>
                     <th>ID Karyawan</th>
+                    <th>Nama</th>
                     <th>Username</th>
                     <th>Email</th>
                     <th>Alamat</th>

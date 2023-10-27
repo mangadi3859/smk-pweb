@@ -5,10 +5,14 @@ $err = $_GET["err"] ?? NULL;
 $idkaryawan = $_GET["k"] ?? "";
 $ignoreAuth = $_GET["ignoreAuth"] ?? NULL;
 $redirect = isset($_GET["redirect"]) ? $_GET["redirect"] : NULL;
-if (isAuth($conn) && !isset($ignoreAuth)) {
+
+if (isAuth($conn) && !isAdmin($_SESSION["user"]) && !@$ignoreAuth) {
     header("Location: " . (isset($redirect) ? $redirect : "index.php"));
     exit;
 }
+
+$query = "SELECT tb_karyawan.idkaryawan AS idkaryawan, nama FROM tb_karyawan LEFT JOIN tb_login USING(idkaryawan) WHERE tb_login.username IS NULL";
+$karyawan = queryData($conn, $query);
 ?>
 
 
@@ -30,77 +34,77 @@ if (isAuth($conn) && !isset($ignoreAuth)) {
 </head>
 
 <body>
-    <form
-        action="api/register.php?<?= isset($ignoreAuth) ? "ignoreAuth&" : "" ?>redirect<?= isset($redirect) ? "=" . $redirect : "" ?>"
-        method="POST" enctype="application/x-www-form-urlencoded" id="form">
-        <!-- <div class="heading">
-            <p class="title">Register</p>
-        </div>
-        <disv class="form-content">
-            <label for="i-username">Username</label>
-            <input type="text" name="username" required placeholder="Username" id="i-username">
-            <label for="i-id">Kode Karyawan</label>
-            <input type="text" maxLength="4" required placeholder="Kode karyawan" regex="^\d{1,4}$" name="idkaryawan"
-                id="i-id">
-            <label for="i-password">Password</label>
-            <input type="password" placeholder="Password" max="20" required name="password" id="i-password">
-            <button type="submit">Submit</button>
-        </disv> -->
+    <?php include "components/navbar.php" ?>
 
-        <p class="title">REGISTER</p>
-        <div class="input-container">
+    <main class="main-container">
+        <form
+            action="api/register.php?<?= isset($ignoreAuth) ? "ignoreAuth&" : "" ?>redirect<?= isset($redirect) ? "=" . $redirect : "" ?>"
+            method="POST" enctype="application/x-www-form-urlencoded" id="form">
 
-            <div class="input-group">
-                <label for="i-email">Email</label>
-                <div class="outer-input">
-                    <label for="i-email" class="fa fas fa-envelope input-icon"></label>
-                    <input autocomplete="off" class="input" type="email" name="email" required placeholder="Email"
+            <p class="title">REGISTER</p>
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="i-id">Kode Karyawan</label>
+                    <div class="outer-input">
+                        <select required class="input"
+                            id="i-id" name="idkaryawan">
+                            <option value="">Pilih Kode Karyawan</option>
+                            <?php
+
+                            foreach ($karyawan as $data) {
+                                $id = $data["idkaryawan"];
+                                $nama = $data["nama"];
+                                echo "<option value='$id'>$nama</option>";
+                            }
+                            ?>
+                        </select>
+                        <label for="i-id" class="fa fas fa-newspaper input-icon"></label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="i-email">Email</label>
+                    <div class="outer-input">
+                        <input autocomplete="off" class="input" type="email" name="email" required placeholder="Email"
                         id="i-email">
+                        <label for="i-email" class="fa fas fa-envelope input-icon"></label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="input-group">
-                <label for="i-username">Username</label>
-                <div class="outer-input">
-                    <label for="i-username" class="fa fas fa-user input-icon"></label>
-                    <input autocomplete="off" class="input" type="text" name="username" required placeholder="Username"
+                <div class="input-group">
+                    <label for="i-username">Username</label>
+                    <div class="outer-input">
+                        <input autocomplete="off" class="input" type="text" name="username" required placeholder="Username"
                         id="i-username">
+                        <label for="i-username" class="fa fas fa-user input-icon"></label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="input-group">
-                <label for="i-id">Kode Karyawan</label>
-                <div class="outer-input">
-                    <label for="i-id" class="fa fas fa-newspaper input-icon"></label>
-                    <input autocomplete="off" value="<?= $idkaryawan ?>" class="input" type="text" name="idkaryawan"
-                        required placeholder="Kode Karyawan" id="i-id">
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label for="i-password">Password</label>
-                <div class="outer-input">
-                    <label for="i-password" class="fa fas fa-lock input-icon"></label>
-                    <input autocomplete="off" class="input" type="password" placeholder="Password" max="20" required
+                <div class="input-group">
+                    <label for="i-password">Password</label>
+                    <div class="outer-input">
+                        <input autocomplete="off" class="input" type="password" placeholder="Password" max="20" required
                         name="password" id="i-password">
+                        <label data-password-toggle class="fa fas fa-eye-slash input-icon"></label>
+                    </div>
+                </div>
+
+                <?php
+                if (isset($err)) {
+                    echo "<p id='form-err' class='error'>Gagal: {$err}</p>";
+                }
+                ?>
+
+                <div class="btn-container">
+                    <button type="submit">Submit</button>
+                    <p>Already have an account? <a href="login.php">Login Here</a></p>
                 </div>
             </div>
 
+        </form>
+    </main>
 
-
-            <?php
-            if (isset($err)) {
-                echo "<p id='form-err' class='error'>Gagal: {$err}</p>";
-            }
-            ?>
-        </div>
-
-        <div class="btn">
-            <button type="submit">Submit</button>
-            <p>Already have an account? <a href="login.php">Login Here</a></p>
-        </div>
-    </form>
-
+    <?php include "components/footer.php" ?>
 </body>
 
 </html>

@@ -1,6 +1,15 @@
 <?php
 require_once "../utils/conn.php";
 
+
+if (!isAuth($conn)) {
+    exit(header("Location: ../login.php?redirect={$_SERVER["REQUEST_URI"]}"));
+}
+
+if (!isAdmin($_SESSION["user"])) {
+    exit("Error 403 - Forbidden Access");
+}
+
 $query = "SELECT idobat, perusahaan, namaobat, kategoriobat, hargajual, 
 hargabeli, stok_obat, tbobat.keterangan AS keterangan, 
 tb_detail_transaksi.iddetailtransaksi AS is_used

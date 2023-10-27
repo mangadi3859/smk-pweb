@@ -1,0 +1,4 @@
+ErrorDocument 401 http://localhost/smk/pweb/\_401.php
+ErrorDocument 403 http://localhost/smk/pweb/\_403.php
+ErrorDocument 404 http://localhost/smk/pweb/\_404.php
+ErrorDocument 405 http://localhost/smk/pweb/\_405.php

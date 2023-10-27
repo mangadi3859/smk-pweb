@@ -8,7 +8,15 @@ $DB_PASSWORD = '';
 $DB_NAME = 'apotek';
 $COOKIE_KEY = 'apotek-';
 $SESSION_EXPIRES = 60 * 60 * 12; //12 Jam
+$ROOT_PATH = "/smk/pweb";
 $conn;
+
+$LEVEL_USER = [
+    0 => 'KARYAWAN',
+    1 => 'ADMIN',
+    'ADMIN' => 1,
+    'KARYAWAN' => 0
+];
 
 try {
     global $conn;
@@ -64,4 +72,10 @@ function isAuth(mysqli $conn): bool
     }
 
     return true;
+}
+
+function isAdmin(array $user): bool
+{
+    global $LEVEL_USER;
+    return @$user['leveluser'] && $user["leveluser"] == $LEVEL_USER["ADMIN"];
 }

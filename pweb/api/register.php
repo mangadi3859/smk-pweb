@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
 }
 
 $ignoreAuth = $_GET["ignoreAuth"] ?? NULL;
-if (isAuth($conn) && !isset($ignoreAuth)) {
+if (isAuth($conn) && !isAdmin($_SESSION["user"]) && !@$ignoreAuth) {
     header("Location: ../");
 }
 
@@ -17,9 +17,13 @@ $email = $_POST["email"];
 $username = $_POST["username"];
 $idkaryawan = $_POST["idkaryawan"];
 $password = $_POST["password"];
+$level = ((int) $_POST["leveluser"]) ?? 0;
 
 if (!isset($username) || !isset($email) || !isset($idkaryawan) || !isset($password))
-    return header("Location: $BACK_URL?err=Data tidak lengkap");
+    exit(header("Location: $BACK_URL?err=Data tidak lengkap"));
+
+if (is_nan($level) || !@$LEVEL_USER[$level])
+    exit(header("Location: $BACK_URL?err=Data salah"));
 
 $username = trim(strtolower($username));
 $hashed = password_hash($password, PASSWORD_BCRYPT);
@@ -38,7 +42,7 @@ if (!empty($userdata)) {
     exit;
 }
 
-$query = "INSERT INTO `tb_login` VALUE ('$username', '$email', '$hashed', $idkaryawan, 0)";
+$query = "INSERT INTO `tb_login` VALUE ('$username', '$email', '$hashed', $idkaryawan, $level)";
 
 try {
     $redirect = isset($_GET["redirect"]) ? $_GET["redirect"] : NULL;

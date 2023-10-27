@@ -11,7 +11,7 @@ echo "<br/>";
 echo json_encode(parse_url($_SERVER["REQUEST_URI"]));
 echo "<br/>";
 echo json_encode($_SESSION);
-
+echo htmlspecialchars("<br/>");
 
 echo generateBreadcrumb($_SERVER["REQUEST_URI"]);
 ?>

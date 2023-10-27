@@ -30,7 +30,8 @@ $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
 </head>
 
 <body>
-    <div class="container">
+    <?php include "components/navbar.php" ?>
+    <main class="main-container">
         <form action="api/login.php?redirect<?= isset($redirect) ? "=" . $redirect : "" ?>" method="POST" id="form">
             <p class="title">LOGIN</p>
             <div class="input-container">
@@ -38,18 +39,16 @@ $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
                 <div class="input-group">
                     <label for="i-username">Username</label>
                     <div class="outer-input">
+                        <input class="input" type="text" name="username" required placeholder="Username or email" id="i-username">
                         <label for="i-username" class="fa fas fa-user input-icon"></label>
-                        <input class="input" type="text" name="username" required placeholder="Username or email"
-                            id="i-username">
                     </div>
                 </div>
 
                 <div class="input-group">
                     <label for="i-password">Password</label>
                     <div class="outer-input">
-                        <label for="i-password" class="fa fas fa-lock input-icon"></label>
-                        <input class="input" type="password" placeholder="Password" max="20" required name="password"
-                            id="i-password">
+                        <input class="input" type="password" placeholder="Password" max="20" required name="password" id="i-password">
+                        <label data-password-toggle class="fa fas fa-eye-slash input-icon"></label>
                     </div>
                 </div>
 
@@ -60,14 +59,15 @@ $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
                     echo "<p id='form-err' class='error'>Gagal: {$err}</p>";
                 }
                 ?>
-            </div>
 
-            <div class="btn">
-                <button type="submit">Submit</button>
-                <p>Don't have account? <a href="register.php">Register Here</a></p>
+                <div class="btn-container">
+                    <button type="submit">Submit</button>
+                    <p>Don't have account? <a href="register.php">Register Here</a></p>
+                </div>
             </div>
-        </form>
-    </div>
+            </form>
+    </main>
+    <?php include "components/footer.php" ?>
 </body>
 
 </html>

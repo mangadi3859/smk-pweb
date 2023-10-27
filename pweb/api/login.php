@@ -11,7 +11,8 @@ if (isAuth($conn)) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
-    header("Location: " . $BACK_URL);
+    // header("Location: " . $BACK_URL);
+    http_response_code(403);
     exit;
 }
 

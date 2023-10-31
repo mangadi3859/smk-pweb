@@ -83,6 +83,10 @@ body {
     font-family: Poppins, "Segoe UI";
 }
 
+body:has(.nav) {
+    padding-top: 6rem;
+}
+
 .main-container {
     width: min(var(--max-width), 100%);
     padding-inline: var(--container-pad-x);
@@ -128,4 +132,9 @@ button,
 .btn-primary:where(:hover, :focus, .active) {
     color: white;
     background-color: var(--accent-600);
+}
+
+button,
+.unselect {
+    user-select: none !important;
 }

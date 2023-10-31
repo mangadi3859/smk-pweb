@@ -33,14 +33,11 @@ $sql = queryData($conn, $query);
 </head>
 
 <body>
-    <div class="container">
-        <?php
-        echo "<h1 class='head'>";
-        echo isAuth($conn) ? "SUDAH LOGIN" : "BELUM LOGIN";
-        echo "</h1>";
-        echo isAuth($conn) ? "<a style='color: aqua;' href='../logout.php?redirect={$_SERVER["REQUEST_URI"]}'>Logout</a>" : "<a style='color: aqua;' href='../login.php?redirect={$_SERVER["REQUEST_URI"]}'>Login Here</a>";
+    <?php include "../components/navbar.php" ?>
 
-        ?>
+    <main class="main-container">
+
+        
         <div class='table-con'>
             <table>
                 <thead>
@@ -50,7 +47,7 @@ $sql = queryData($conn, $query);
                     <th>Nomer HP</th>
                     <th>Usia</th>
                     <th>Bukti Foto Resep</th>
-                    <th>Actions</th>
+                    <th class="action-head">Actions</th>
                 </thead>
                 <tbody>
                     <?php
@@ -71,8 +68,8 @@ $sql = queryData($conn, $query);
                         echo <<<act
                     <td>
                         <div class='action-tb'>
-                            <a style="$attr_btn" class='btn' href='api/delete.php?id={$data['idpelanggan']}'>DELETE</a>
-                            <a class='btn' href='edit.php?id={$data['idpelanggan']}'>EDIT</a>
+                            <a style="$attr_btn" class='table-action' href='api/delete.php?id={$data['idpelanggan']}'>DELETE</a>
+                            <a class='table-action' href='edit.php?id={$data['idpelanggan']}'>EDIT</a>
                         </div>
                     </td> 
                     act;
@@ -84,8 +81,9 @@ $sql = queryData($conn, $query);
                 </tbody>
             </table>
         </div>
+    </main>
 
-    </div>
+    <?php include "../components/footer.php" ?>    
 </body>
 
 </html>

@@ -29,14 +29,9 @@ $sql = queryData($conn, $query);
 </head>
 
 <body>
-    <div class="container">
-        <?php
-        echo "<h1 class='head'>";
-        echo isAuth($conn) ? "SUDAH LOGIN" : "BELUM LOGIN";
-        echo "</h1>";
-        echo isAuth($conn) ? "<a style='color: aqua;' href='../logout.php?redirect={$_SERVER["REQUEST_URI"]}'>Logout</a>" : "<a style='color: aqua;' href='../login.php?redirect={$_SERVER["REQUEST_URI"]}'>Login Here</a>";
+<?php include "../components/navbar.php" ?>
 
-        ?>
+    <main class="main-container">    
         <div class='table-con'>
             <table>
                 <thead>
@@ -46,7 +41,7 @@ $sql = queryData($conn, $query);
                     <th>Email</th>
                     <th>Alamat</th>
                     <th>Telp</th>
-                    <th>Actions</th>
+                    <th class="action-head">Actions</th>
                 </thead>
                 <tbody>
                     <?php
@@ -55,7 +50,8 @@ $sql = queryData($conn, $query);
                         $inner = "";
 
                         $is_used = array_pop($data);
-                        $attr_btn = $is_used ? "pointer-events: none; cursor: not-allowed; opacity: 0.5;" : "";
+                        $attr_btn = $is_used ? "cursor: not-allowed; opacity: 0.5; pointer-events: none;" : "";
+                        $del_link = $is_used ? "api/delete.php?id={$data['idkaryawan']}" : "";
 
                         foreach ($data as $val) {
                             $value = empty($val) ? "<a href='../register.php?ignoreAuth&redirect={$_SERVER['REQUEST_URI']}&k=${data['idkaryawan']}'><i style='opacity: .5'>Not Set~</i></a>" : $val;
@@ -67,8 +63,8 @@ $sql = queryData($conn, $query);
                         echo <<<act
                     <td>
                         <div class='action-tb'>
-                            <a style="$attr_btn" class='btn' href='api/delete.php?id={$data['idkaryawan']}'>DELETE</a>
-                            <a class='btn' href='edit.php?id={$data['idkaryawan']}'>EDIT</a>
+                            <a style="$attr_btn" class='table-action unselect' href='$del_link'>DELETE</a>
+                            <a class='table-action unselect' href='edit.php?id={$data['idkaryawan']}'>EDIT</a>
                         </div>
                     </td> 
                     act;
@@ -80,8 +76,9 @@ $sql = queryData($conn, $query);
                 </tbody>
             </table>
         </div>
+    </main>
 
-    </div>
+    <?php include "../components/footer.php" ?>
 </body>
 
 </html>

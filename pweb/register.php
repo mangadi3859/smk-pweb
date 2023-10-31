@@ -74,7 +74,7 @@ $karyawan = queryData($conn, $query);
                 <div class="input-group">
                     <label for="i-username">Username</label>
                     <div class="outer-input">
-                        <input autocomplete="off" class="input" type="text" name="username" required placeholder="Username"
+                        <input pattern="[A-Za-z0-9_]*" autocomplete="off" class="input" type="text" name="username" required placeholder="Username"
                         id="i-username">
                         <label for="i-username" class="fa fas fa-user input-icon"></label>
                     </div>
@@ -97,7 +97,7 @@ $karyawan = queryData($conn, $query);
 
                 <div class="btn-container">
                     <button type="submit">Submit</button>
-                    <p>Already have an account? <a href="login.php">Login Here</a></p>
+                    <p>Sudah memiliki akun? <a href="login.php">Login disini</a></p>
                 </div>
             </div>
 

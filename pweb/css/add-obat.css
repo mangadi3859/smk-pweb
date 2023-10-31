@@ -1,7 +1,5 @@
 body {
-    background-image: url("../assets/tambah-obat-banner.svg");
-    background-size: cover;
-    background-position: center center;
+    background-color: var(--neutral-base);
     /* background-image: linear-gradient(to bottom left, var(--secondary-clr), var(--primary-clr-100)); */
     background-repeat: no-repeat;
 }
@@ -9,12 +7,13 @@ body {
 label {
     position: relative;
     font-weight: bold;
-    color: var(--primary-clr-200);
+    color: var(--primary-base);
 }
 
 .form-content > label:has(+ .outer-input :is(.input)[required])::before {
     content: "*";
-    color: black;
+    color: var(--accent-base);
+    font-size: 1.5rem;
 }
 
 #form .error {
@@ -30,12 +29,34 @@ label {
 #form {
     margin-block: 5rem;
     background-color: white;
+    isolation: isolate;
+    position: relative;
 }
 
+/* #form::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -75%);
+
+    background: radial-gradient(var(--accent-400), transparent);
+    border-radius: 100%;
+    aspect-ratio: 1/1;
+    width: 175%;
+    overflow: hidden;
+    z-index: -1;
+    filter: blur(7rem);
+} */
+
 body {
+    min-height: 100vh;
+}
+
+main {
     display: grid;
     place-items: center;
-    min-height: 100vh;
+    flex: 1;
 }
 
 #form {
@@ -43,14 +64,15 @@ body {
     position: relative;
     isolation: isolate;
     display: flex;
+    width: 100%;
+    max-width: 30rem;
     gap: 1.5rem;
-    width: 35%;
     border-radius: 0.5rem;
     color: black;
     overflow: hidden;
     box-shadow: 0 0 5rem rgb(0 0 0 / 0.3);
-    border: 2px solid var(--primary-clr-100);
-    background-color: #ddd;
+    border: 2px solid var(--primary-400);
+    background-color: var(--neutral-400);
 }
 
 select::placeholder {
@@ -74,7 +96,7 @@ select.input:focus {
 
 .outer-input {
     background-color: #ccc;
-    border: 2px solid #b1b1b1;
+    border: 2px solid #ccc;
     width: 100%;
     color: black;
     border-radius: 0.25rem;
@@ -99,13 +121,12 @@ select.input:focus {
 }
 
 .outer-input:not(:has(.input[readonly])):focus-within .input-icon > :is(.fa, .fas, .fab) {
-    color: var(--primary-clr);
     opacity: 1;
+    color: var(--accent-base);
 }
 
 .input-icon > :is(.fa, .fas, .fab) {
-    opacity: 0.5;
-    color: black;
+    color: rgb(0 0 0 / 0.5);
 }
 
 .input {
@@ -146,30 +167,26 @@ button {
 }
 
 #form button {
-    color: white;
-}
-
-#form button {
     margin-top: 1rem;
+    color: white;
     /* padding: 0.5rem 2rem; */
+    text-transform: capitalize;
     padding: var(--padding-y) var(--padding-x);
-    background-color: var(--primary-clr-200);
+    background-color: var(--accent-base);
     outline: none;
     border: none;
     border-radius: 0.25rem;
-    font-weight: bold;
     font-size: 1.15rem;
-    text-transform: uppercase;
 }
 
 .outer-input:has(.input:not([readonly]):focus) {
     background-color: #eee;
-    border-color: var(--primary-clr-200);
+    border-color: var(--accent-base);
 }
 
 #form button:where(:focus, :hover) {
-    background-color: var(--primary-clr-100);
-    border-color: var(--primary-clr-200);
+    background-color: var(--accent-600);
+    border-color: var(--accent--700);
     scale: 0.975;
 }
 
@@ -177,7 +194,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 2px solid var(--primary-clr-100);
+    border-bottom: 2px solid var(--primary-400);
 }
 
 #form .form-content {
@@ -191,7 +208,7 @@ button {
     font-size: 1.75rem;
     font-weight: bold;
     text-align: center;
-    color: var(--primary-clr);
+    color: var(--primary-400);
 }
 
 .outer-input:has(.input[readonly]),

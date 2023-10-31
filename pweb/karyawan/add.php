@@ -1,8 +1,18 @@
 <?php
 require_once "../utils/conn.php";
 
+
+if (!isAuth($conn)) {
+    exit(header("Location: ../login.php?redirect={$_SERVER["REQUEST_URI"]}"));
+}
+
+if (!isAdmin($_SESSION["user"])) {
+    exit(header("Location: ../_403.php"));
+}
+
 $sql = "SELECT * FROM `tb_supplier`";
 $supplier = queryData($conn, $sql);
+
 
 $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
 
@@ -27,40 +37,54 @@ $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
 </head>
 
 <body>
-    <form id="form" action="api/add.php" method="POST">
-        <div class="heading">
-            <p class="title">TAMBAH KARYAWAN</p>
-        </div>
-        <div class="form-content">
-            <label for="i-alamat">Alamat</label>
-            <div class="outer-input">
-                <div class="input-icon">
-                    <label for="i-alamat" class="fas fa-map-location"></label>
-                </div>
-                <input type="text" placeholder="Alamat" required class="input" name="alamat" id="i-alamat">
+    <?php include "../components/navbar.php" ?>
+
+    <main class="main-container">    
+        <form id="form" action="api/add.php" method="POST">
+            <div class="heading">
+                <p class="title">TAMBAH KARYAWAN</p>
             </div>
-            <!-- <input class="input" required type="text" id="i-idsupplier" name="id_supplier" regex="^\d+$"
-placeholder="ID Obat"> -->
-
-            <label for="i-phone">Nomer HP</label>
-            <div class="outer-input">
-                <div class="input-icon">
-                    <label for="i-phone" class="fas fa-square-phone"></label>
+            <div class="form-content">
+                <label for="i-nama">Nama</label>
+                <div class="outer-input">
+                    <div class="input-icon">
+                        <label for="i-nama" class="fas fa-user"></label>
+                    </div>
+                    <input type="text" placeholder="Nama Karyawan" required class="input" name="nama" id="i-nama">
                 </div>
-                <input regex="^\d{4,20}$" data-number-only-input class="input" autocomplete="off" required type="text"
-                    id="i-phone" name="telp" placeholder="Nomer HP">
+
+                <label for="i-alamat">Alamat</label>
+                <div class="outer-input">
+                    <div class="input-icon">
+                        <label for="i-alamat" class="fas fa-map-location"></label>
+                    </div>
+                    <input type="text" placeholder="Alamat" required class="input" name="alamat" id="i-alamat">
+                </div>
+                <!-- <input class="input" required type="text" id="i-idsupplier" name="id_supplier" regex="^\d+$"
+    placeholder="ID Obat"> -->
+
+                <label for="i-phone">Nomer HP</label>
+                <div class="outer-input">
+                    <div class="input-icon">
+                        <label for="i-phone" class="fas fa-square-phone"></label>
+                    </div>
+                    <input regex="^\d{4,20}$" data-number-only-input class="input" autocomplete="off" required type="text"
+                        id="i-phone" name="telp" placeholder="Nomer HP">
+                </div>
+
+                <?php
+                if (isset($err)) {
+                    echo "<p id='form-err' class='error'>Gagal: {$err}</p>";
+                }
+
+                ?>
+
+                <button type="submit">Submit</button>
             </div>
+        </form>
+    </main>
 
-            <?php
-            if (isset($err)) {
-                echo "<p id='form-err' class='error'>Gagal: {$err}</p>";
-            }
-
-            ?>
-
-            <button type="submit">Submit</button>
-        </div>
-    </form>
+    <?php include "../components/footer.php" ?>
 </body>
 
 </html>

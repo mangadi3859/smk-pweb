@@ -29,22 +29,18 @@ $data = $sql[0];
 </head>
 
 <body>
-    <div class="container">
-        <?php
-        echo "<h1 class='head'>";
-        echo isAuth($conn) ? "SUDAH LOGIN" : "BELUM LOGIN";
-        echo "</h1>";
-        echo isAuth($conn) ? "<a style='color: aqua;' href='../logout.php?redirect={$_SERVER["REQUEST_URI"]}'>Logout</a>" : "<a style='color: aqua;' href='../login.php?redirect={$_SERVER["REQUEST_URI"]}'>Login Here</a>";
+    <?php include "../components/navbar.php" ?>
 
-
-
-        echo "<h2 class='head'>Bukti foto resep dari <a style='color: aqua;' href='./'>{$data["namalengkap"]}</a></h2>";
-        ?>
-        <div class='table-con' style="display: grid; palce-items: center; padding: 2rem;">
-            <img style="display: block; margin-inline: auto; max-width: 100%;" src="<?= $data["data64"] ?>" alt="">
+    <main class="main-container">
+        <div class="img-con" style="background-color: var(--neutral-400); width: 100%; border-radius: .15rem; box-shadow: 0 .5rem 5rem 0 rgb(0 0 0 / .3); padding: 2rem;">
+            <h2 style='color: black; margin: 0'>Bukti foto resep dari <a style='color: var(--primary-400);' href='./'><?= $data["namalengkap"] ?></a></h2>
+            <div style="display: grid; palce-items: center; padding: 2rem;">
+                <img style="display: block; margin-inline: auto; max-width: 100%;" src="<?= $data["data64"] ?>" alt="">
+            </div>
         </div>
+    </main>
 
-    </div>
+    <?php include "../components/footer.php" ?>
 </body>
 
 </html>

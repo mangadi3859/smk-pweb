@@ -36,7 +36,7 @@ $sql = queryData($conn, $query);
     <?php include "../components/navbar.php" ?>
 
     <main class="main-container">
-
+        <a href="add.php" class="btn-add btn btn-primary">Tambah data</a>
         
         <div class='table-con'>
             <table>
@@ -56,7 +56,7 @@ $sql = queryData($conn, $query);
                         $inner = "";
 
                         $is_used = array_pop($data);
-                        $attr_btn = $is_used ? "pointer-events: none; cursor: not-allowed; opacity: 0.5;" : "";
+                        $attr_btn = $is_used ? "pointer-events: none; cursor: not-allowed; opacity: 0.35;" : "";
                         unset($data["buktifotoresep"]);
 
                         foreach ($data as $val) {
@@ -68,8 +68,8 @@ $sql = queryData($conn, $query);
                         echo <<<act
                     <td>
                         <div class='action-tb'>
-                            <a style="$attr_btn" class='table-action' href='api/delete.php?id={$data['idpelanggan']}'>DELETE</a>
-                            <a class='table-action' href='edit.php?id={$data['idpelanggan']}'>EDIT</a>
+                            <a style="$attr_btn" class='table-action unselect' href='api/delete.php?id={$data['idpelanggan']}'>DELETE</a>
+                            <a class='table-action unselect' href='edit.php?id={$data['idpelanggan']}'>EDIT</a>
                         </div>
                     </td> 
                     act;

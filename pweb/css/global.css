@@ -83,8 +83,12 @@ body {
     font-family: Poppins, "Segoe UI";
 }
 
-body:has(.nav) {
+/* body:has(.nav) {
     padding-top: 6rem;
+} */
+
+main {
+    margin-block: 2rem;
 }
 
 .main-container {

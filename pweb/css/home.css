@@ -1,5 +1,5 @@
 body {
-    background-color: var(--neutral-400);
+    background-color: var(--neutral-base);
 }
 
 .head {
@@ -23,9 +23,16 @@ body {
     transform: scale(1.05);
 }
 
+.table-action:first-child:hover {
+    box-shadow: 0 0 1rem 0 rgb(255 0 0 / 0.5);
+    color: rgb(170, 0, 0);
+    transform: scale(1.05);
+}
+
 .table-action:first-child {
     background-color: rgb(255 0 0 / 0.2);
     border-color: rgb(255 0 0 / 0.5);
+    color: black;
 }
 
 .action-tb {
@@ -42,8 +49,15 @@ body {
     overflow-x: hidden !important;
 }
 
+/* main.main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+} */
+
 .table-con {
     width: 100%;
+    margin-top: 1rem;
     border-radius: 0.5rem;
     overflow: hidden;
     border: 1px solid rgb(0 0 0 / 0.3);

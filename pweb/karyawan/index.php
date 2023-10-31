@@ -32,6 +32,7 @@ $sql = queryData($conn, $query);
 <?php include "../components/navbar.php" ?>
 
     <main class="main-container">    
+        <a href="add.php" class="btn-add btn btn-primary">Tambah data</a>
         <div class='table-con'>
             <table>
                 <thead>
@@ -50,7 +51,7 @@ $sql = queryData($conn, $query);
                         $inner = "";
 
                         $is_used = array_pop($data);
-                        $attr_btn = $is_used ? "cursor: not-allowed; opacity: 0.5; pointer-events: none;" : "";
+                        $attr_btn = $is_used ? "pointer-events: none; cursor: not-allowed; opacity: 0.35;" : "";
                         $del_link = $is_used ? "api/delete.php?id={$data['idkaryawan']}" : "";
 
                         foreach ($data as $val) {

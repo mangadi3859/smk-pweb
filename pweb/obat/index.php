@@ -1,15 +1,6 @@
 <?php
 require_once "../utils/conn.php";
 
-
-if (!isAuth($conn)) {
-    exit(header("Location: ../login.php?redirect={$_SERVER["REQUEST_URI"]}"));
-}
-
-if (!isAdmin($_SESSION["user"])) {
-    exit("Error 403 - Forbidden Access");
-}
-
 $query = "SELECT idobat, perusahaan, namaobat, kategoriobat, hargajual, 
 hargabeli, stok_obat, tbobat.keterangan AS keterangan, 
 tb_detail_transaksi.iddetailtransaksi AS is_used
@@ -49,6 +40,7 @@ $sql = queryData($conn, $query);
 <?php include "../components/navbar.php" ?>
 
     <main class="main-container">    
+        <a href="add.php" class="btn-add btn btn-primary">Tambah data</a>
         <div class='table-con'>
             <table>
                 <thead>
@@ -69,7 +61,7 @@ $sql = queryData($conn, $query);
                         $inner = "";
 
                         $is_used = array_pop($data) != NULL;
-                        $attr_btn = $is_used ? "pointer-events: none; cursor: not-allowed; opacity: 0.5;" : "";
+                        $attr_btn = $is_used ? "pointer-events: none; cursor: not-allowed; opacity: 0.35;" : "";
 
                         foreach ($data as $val) {
                             $inner = $inner . "<td>" . $val . "</td>";
@@ -80,8 +72,8 @@ $sql = queryData($conn, $query);
                         echo <<<act
                     <td>
                         <div class='action-tb'>
-                            <a style="$attr_btn" class='table-action' href='api/delete.php?id={$data['idobat']}'>DELETE</a>
-                            <a class='table-action' href='edit.php?id={$data['idobat']}'>EDIT</a>
+                            <a style="$attr_btn" class='table-action unselect' href='api/delete.php?id={$data['idobat']}'>DELETE</a>
+                            <a class='table-action unselect' href='edit.php?id={$data['idobat']}'>EDIT</a>
                         </div>
                     </td> 
                     act;

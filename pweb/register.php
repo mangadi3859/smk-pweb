@@ -54,7 +54,8 @@ $karyawan = queryData($conn, $query);
                             foreach ($karyawan as $data) {
                                 $id = $data["idkaryawan"];
                                 $nama = $data["nama"];
-                                echo "<option value='$id'>$nama</option>";
+                                $select = $id == $idkaryawan ? "selected" : "";
+                                echo "<option $select value='$id'>$nama</option>";
                             }
                             ?>
                         </select>

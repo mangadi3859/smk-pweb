@@ -1,6 +1,11 @@
 <?php
 require_once "../../utils/conn.php";
 
+if (!isAuth($conn)) {
+    exit(header("Location: ../_401.php"));
+}
+
+
 // $redirect = isset($_GET["redirect"]) ? $_GET["redirect"] : NULL;
 $BACK_URL = "../";
 

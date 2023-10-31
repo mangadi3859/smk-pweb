@@ -1,6 +1,9 @@
 <?php
 require_once "../../utils/conn.php";
 
+if (!isAuth($conn)) {
+    exit(header("Location: ../_401.php"));
+}
 
 $BACK_URL = "../add.php";
 
@@ -9,12 +12,12 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit;
 }
 
-// $id_karyawan = (int) ($_POST["id_karyawan"] ?? NULL);
+$nama = $_POST["nama"] ?? NULL;
 $alamat = $_POST["alamat"] ?? NULL;
 $telp = $_POST["telp"] ?? NULL;
 
 
-if (!isset($alamat) || !isset($telp)) {
+if (!@$nama || !isset($alamat) || !isset($telp)) {
     header("Location: {$BACK_URL}?err=Data tidak lengkap");
     exit;
 }
@@ -24,7 +27,7 @@ if (is_nan((int) $telp)) {
     exit;
 }
 
-$query = "INSERT INTO tb_karyawan VALUE (NULL, '$alamat', '$telp')";
+$query = "INSERT INTO tb_karyawan VALUE (NULL, '$nama', '$alamat', '$telp')";
 
 try {
     queryData($conn, $query);

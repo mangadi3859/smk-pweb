@@ -5,6 +5,10 @@ if (!isAuth($conn)) {
     exit(header("Location: ../login.php?redirect={$_SERVER["REQUEST_URI"]}"));
 }
 
+if (!isAdmin($_SESSION["user"])) {
+    exit(header("Location: ../_403.php?msg=Access Denied"));
+}
+
 $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
 $id = (int) $_GET["id"];
 

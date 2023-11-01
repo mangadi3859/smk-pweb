@@ -42,5 +42,4 @@ $data = $sql[0];
 
     <?php include "../components/footer.php" ?>
 </body>
-
 </html>

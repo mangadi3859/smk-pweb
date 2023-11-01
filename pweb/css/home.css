@@ -62,6 +62,7 @@ body {
     overflow: hidden;
     border: 1px solid rgb(0 0 0 / 0.3);
     overflow-x: auto;
+    /* box-shadow: 0 0.15rem 0.75rem rgb(0 0 0 / 0.3); */
 
     /* overflow-x: hidden !important; */
     /* padding: 1rem 2rem;
@@ -169,7 +170,8 @@ table :is(td, th) {
 }
 
 th {
-    font-weight: bold;
+    color: white;
+    font-weight: normal;
     /* background-color: #ccc; */
     /* text-transform: uppercase; */
 }

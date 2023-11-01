@@ -2,7 +2,11 @@
 require_once "../../utils/conn.php";
 
 if (!isAuth($conn)) {
-    exit(header("Location: ../_401.php"));
+    exit(header("Location: ../../_401.php"));
+}
+
+if (!isAdmin($_SESSION["user"])) {
+    exit(header("Location: ../../_403.php?msg=Access Denied"));
 }
 
 $BACK_URL = "../edit.php";

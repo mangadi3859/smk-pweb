@@ -1,5 +1,7 @@
 <?php
 require_once "utils/conn.php";
+
+$msg = $_GET["msg"] ?? NULL;
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +21,9 @@ require_once "utils/conn.php";
         <div class="main-container" style="display: grid; place-items: center;">
             <div style="display: flex; flex-direction: column; min-width: 50%;">
                 <h1 style="color: var(--primary-500); font-size: 3.5rem; margin-block: 0;">Error 403</h1>
-                <span style="font-size: 1rem; margin-block: 0;">Forbidden Request</span>
+                <span style="font-size: 1rem; margin-block: 0;">
+                <?= @$msg ? $msg : "Forbidden Request" ?>
+                </span>
             </div>
         </div>
     </main>

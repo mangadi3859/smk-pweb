@@ -7,7 +7,7 @@
         </div>
         <b>|</b>
         <span>
-            Powered By <span class="brand">MangAdi</span>
+            Powered By <a href="https://github.com/mangadi3859" class="brand">MangAdi</a>
         </span>
     </div>
 </footer>

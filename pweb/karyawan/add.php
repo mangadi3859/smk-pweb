@@ -7,7 +7,7 @@ if (!isAuth($conn)) {
 }
 
 if (!isAdmin($_SESSION["user"])) {
-    exit(header("Location: ../_403.php"));
+    exit(header("Location: ../_403.php?msg=Access Denied"));
 }
 
 $sql = "SELECT * FROM `tb_supplier`";

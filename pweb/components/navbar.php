@@ -22,13 +22,12 @@ $isLoggedIn = isAuth($conn);
         <?php
 
         if (!$isLoggedIn)
-            echo "<div class='login'><a href='$ROOT_PATH/login.php' class='btn btn-primary'>Sign In</a></div>";
+            echo "<div class='login'><a href='$ROOT_PATH/login.php?redirect={$_SERVER["REQUEST_URI"]}' class='btn btn-primary'>Sign In</a></div>";
         else {
             $user_nav = $_SESSION["user"]["username"];
             $isAdmin = isAdmin($_SESSION["user"]);
             $crown = $isAdmin ? "<i title='Admin User' class='fa-solid fa-crown nav-user-admin'></i>" : "";
-            http_response_code(403);
-            echo "<div class='logout'><p title='$user_nav' class='nav-user'>$crown$user_nav</p><a href='$ROOT_PATH/logout.php' class='btn btn-primary'>Log Out</a></div>";
+            echo "<div class='logout'><p title='$user_nav' class='nav-user'>$crown$user_nav</p><a href='$ROOT_PATH/logout.php?redirect={$_SERVER["REQUEST_URI"]}' class='btn btn-primary'>Log Out</a></div>";
         }
         ?>
         

@@ -44,7 +44,7 @@ $sql = queryData($conn, $query);
         <div class='table-con'>
             <table>
                 <thead>
-                    <th>ID Obat</th>
+                    <th>#</th>
                     <th>Supplier</th>
                     <th>Nama Obat</th>
                     <th>Kategori Obat</th>

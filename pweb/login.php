@@ -39,7 +39,7 @@ $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
                 <div class="input-group">
                     <label for="i-username">Username</label>
                     <div class="outer-input">
-                        <input pattern="[A-Za-z0-9_]*" class="input" type="text" name="username" required placeholder="Username or email" id="i-username">
+                        <input pattern="[A-Za-z0-9_@\.]*" class="input" type="text" name="username" required placeholder="Username or email" id="i-username">
                         <label for="i-username" class="fa fas fa-user input-icon"></label>
                     </div>
                 </div>

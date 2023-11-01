@@ -74,7 +74,7 @@ function isAuth(mysqli $conn): bool
     return true;
 }
 
-function isAdmin(array $user): bool
+function isAdmin($user): bool
 {
     global $LEVEL_USER;
     return @$user['leveluser'] && $user["leveluser"] == $LEVEL_USER["ADMIN"];

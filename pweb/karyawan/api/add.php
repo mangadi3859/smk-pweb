@@ -2,13 +2,17 @@
 require_once "../../utils/conn.php";
 
 if (!isAuth($conn)) {
-    exit(header("Location: ../_401.php"));
+    exit(header("Location: ../../_401.php"));
+}
+
+if (!isAdmin($_SESSION["user"])) {
+    exit(header("Location: ../../_403.php?msg=Access Denied"));
 }
 
 $BACK_URL = "../add.php";
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
-    header("Location: $BACK_URL");
+    header("Location: ../add.php");
     exit;
 }
 

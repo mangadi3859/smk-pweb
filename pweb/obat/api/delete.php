@@ -2,7 +2,7 @@
 require_once "../../utils/conn.php";
 
 if (!isAuth($conn)) {
-    exit(header("Location: ../_401.php"));
+    exit(header("Location: ../../login.php"));
 }
 
 // $redirect = isset($_GET["redirect"]) ? $_GET["redirect"] : NULL;

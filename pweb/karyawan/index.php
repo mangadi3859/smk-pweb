@@ -13,6 +13,8 @@ LEFT JOIN auth
 USING(idkaryawan) 
 ORDER BY tb_karyawan.idkaryawan ASC";
 
+$is_admin = isAdmin($_SESSION["user"] ?? NULL);
+
 $sql = queryData($conn, $query);
 ?>
 
@@ -36,7 +38,7 @@ $sql = queryData($conn, $query);
         <div class='table-con'>
             <table>
                 <thead>
-                    <th>ID Karyawan</th>
+                    <th>#</th>
                     <th>Nama</th>
                     <th>Username</th>
                     <th>Email</th>
@@ -54,8 +56,23 @@ $sql = queryData($conn, $query);
                         $attr_btn = $is_used ? "pointer-events: none; cursor: not-allowed; opacity: 0.35;" : "";
                         $del_link = $is_used ? "api/delete.php?id={$data['idkaryawan']}" : "";
 
-                        foreach ($data as $val) {
+                        foreach ($data as $k => $val) {
                             $value = empty($val) ? "<a href='../register.php?ignoreAuth&redirect={$_SERVER['REQUEST_URI']}&k=${data['idkaryawan']}'><i style='opacity: .5'>Not Set~</i></a>" : $val;
+
+                            switch ($k) {
+                                case "email": {
+                                        $cus_val = $is_admin ? $val : substr($val, 0, 2) . str_repeat("*", 10);
+                                        $value = empty($val) ? "<a href='../register.php?ignoreAuth&redirect={$_SERVER['REQUEST_URI']}&k=${data['idkaryawan']}'><i style='opacity: .5'>Not Set~</i></a>" : $cus_val;
+                                        break;
+                                    }
+
+                                case "telp": {
+                                        $cus_val = $is_admin ? $val : substr($val, 0, 2) . str_repeat("*", 10);
+                                        $value = empty($val) ? "<a href='../register.php?ignoreAuth&redirect={$_SERVER['REQUEST_URI']}&k=${data['idkaryawan']}'><i style='opacity: .5'>Not Set~</i></a>" : $cus_val;
+                                        break;
+                                    }
+                            }
+
                             $inner = $inner . "<td>" . $value . "</td>";
                         }
 

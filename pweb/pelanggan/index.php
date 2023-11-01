@@ -41,7 +41,7 @@ $sql = queryData($conn, $query);
         <div class='table-con'>
             <table>
                 <thead>
-                    <th>ID Pelanggan</th>
+                    <th>#</th>
                     <th>Nama Lengkap</th>
                     <th>Alamat</th>
                     <th>Nomer HP</th>

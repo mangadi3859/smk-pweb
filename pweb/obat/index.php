@@ -60,6 +60,8 @@ $sql = queryData($conn, $query);
                         echo "<tr>";
                         $inner = "";
 
+                        $data["hargajual"] = "Rp. " . number_format($data["hargajual"], 2, ".", ",");
+                        $data["hargabeli"] = "Rp. " . number_format($data["hargabeli"], 2, ".", ",");
                         $is_used = array_pop($data) != NULL;
                         $attr_btn = $is_used ? "pointer-events: none; cursor: not-allowed; opacity: 0.35;" : "";
 

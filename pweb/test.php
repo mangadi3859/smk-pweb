@@ -14,4 +14,21 @@ echo json_encode($_SESSION);
 echo htmlspecialchars("<br/>");
 
 echo generateBreadcrumb($_SERVER["REQUEST_URI"]);
+// session_destroy();
+
+$file = __FILE__;
+$file_dir = dirname(__FILE__);
+$file_dirdir = dirname(dirname(__FILE__));
+// echo __FILE__;
+echo <<<ayy
+        $file
+        <br />
+        $file_dir
+        <br />
+        $file_dirdir
+    ayy;
+
+
+echo @2;
+echo is_nan(0) ? "true" : "false";
 ?>

@@ -116,7 +116,7 @@ button,
 }
 
 .brand :last-child {
-    color: var(--accent-base);
+    color: var(--accent-base) !important;
 }
 
 .btn {

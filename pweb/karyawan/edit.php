@@ -11,13 +11,20 @@ if (!isAdmin($_SESSION["user"])) {
 
 $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
 $id = (int) $_GET["id"];
+$is_master = isMaster($_SESSION["user"]);
 
 if (!isset($id) || is_nan($id)) {
     header("Location: index.php");
     exit;
 }
 
-$data = queryData($conn, "SELECT * FROM tb_karyawan WHERE idkaryawan = '$id'");
+$master_query = "SELECT tb_karyawan.idkaryawan AS idkaryawan, nama, alamat, telp, username, email, leveluser 
+FROM tb_karyawan 
+LEFT JOIN tb_login USING(idkaryawan) 
+WHERE tb_karyawan.idkaryawan = '$id'";
+
+$query = "SELECT * FROM tb_karyawan WHERE idkaryawan = '$id'";
+$data = queryData($conn, $is_master ? $master_query : $query);
 
 if (empty($data)) {
     header("Location: index.php");
@@ -25,7 +32,7 @@ if (empty($data)) {
 }
 
 $data = $data[0];
-
+$action = $is_master && @$data["username"] ? "api/master-edit.php" : "api/edit.php";
 ?>
 
 
@@ -50,9 +57,8 @@ $data = $data[0];
 <body>
     <?php include "../components/navbar.php" ?>
 
-
     <main class="main-container">
-        <form id="form" action="api/edit.php" method="POST">
+        <form id="form" action="<?= $action ?>" method="POST">
             <div class="heading">
                 <p class="title">EDIT KARYAWAN</p>
             </div>
@@ -91,6 +97,58 @@ $data = $data[0];
                     <input value="<?= $data["telp"] ?>" regex="^\d{4,20}$" data-number-only-input class="input"
                         autocomplete="off" required type="text" id="i-phone" name="telp" placeholder="Nomer HP">
                 </div>
+
+                <?php
+                if ($is_master && @$data["username"]) {
+                    $options = "";
+                    foreach (array_filter($LEVEL_USER, function ($i) {
+                        return !is_int($i);
+                    }) as $k => $lvl) {
+                        if ($k == $LEVEL_USER["MASTER"] && $data["leveluser"] != $LEVEL_USER["MASTER"])
+                            continue;
+                        $select = $k == $data["leveluser"] ? "selected" : "";
+                        $options .= "<option $select value='$k'>$lvl</option>";
+                    }
+
+                    $blockmaster = $data["leveluser"] == $LEVEL_USER["MASTER"] ? "readonly style='pointer-events: none;'" : "";
+                    $masterForm = <<<frm
+                        <label for="i-username">Username</label>
+                        <div class="outer-input">
+                            <div class="input-icon">
+                                <label for="i-username" class="fas fa-id-badge"></label>
+                            </div>
+                            <input value="{$data["username"]}" class="input"
+                                autocomplete="off" required type="text" id="i-username" name="username" placeholder="Nomer HP">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="i-email">Email</label>
+                            <div class="outer-input">
+                                <div class="input-icon">
+                                    <label for="i-username" class="fas fa-id-badge"></label>
+                                </div>
+                                <input value="{$data["email"]}" autocomplete="off" class="input" type="email" name="email" required placeholder="Email"
+                                id="i-email">
+                            </div>
+                        </div>
+
+                        <label for="i-lvl">Privilege</label>
+                        <div class="outer-input">
+                            <div class="input-icon">
+                                <label for="i-lvl" class="fas fa-crown"></label>
+                            </div>
+                            <!-- <input type="text" class="input"> -->
+                            <select $blockmaster class="input" required id="i-lvl" name="level">
+                                $options
+                            </select>
+                        </div>
+                    frm;
+
+                    echo $masterForm;
+                }
+                ?>
+
+                
 
                 <?php
                 if (isset($err)) {

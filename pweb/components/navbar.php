@@ -2,7 +2,6 @@
 require_once dirname(dirname(__FILE__)) . "/utils/conn.php";
 
 $isLoggedIn = isAuth($conn);
-
 ?>
 
 <link rel="stylesheet" href="<?= $ROOT_PATH ?>/css/navbar.css">

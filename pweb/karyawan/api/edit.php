@@ -16,6 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit;
 }
 
+
 $id = (int) ($_POST["id"] ?? NULL);
 $nama = $_POST["nama"] ?? NULL;
 $alamat = $_POST["alamat"] ?? NULL;

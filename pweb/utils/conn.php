@@ -14,6 +14,8 @@ $conn;
 $LEVEL_USER = [
     0 => 'KARYAWAN',
     1 => 'ADMIN',
+    2 => 'MASTER',
+    'MASTER' => 2,
     'ADMIN' => 1,
     'KARYAWAN' => 0
 ];
@@ -53,7 +55,6 @@ function isAuth(mysqli $conn): bool
     if (!isset($_SESSION["auth"]) && !isset($_COOKIE["auth"]))
         return false;
 
-
     $auth = $_SESSION["auth"] ?? $_COOKIE["auth"];
     $query = "SELECT username, token, idkaryawan FROM auth WHERE token = '$auth' AND expires > CURRENT_TIMESTAMP";
     $data = queryData($conn, $query);
@@ -77,5 +78,11 @@ function isAuth(mysqli $conn): bool
 function isAdmin($user): bool
 {
     global $LEVEL_USER;
-    return @$user['leveluser'] && $user["leveluser"] == $LEVEL_USER["ADMIN"];
+    return @$user['leveluser'] && ($user["leveluser"] == $LEVEL_USER["ADMIN"] || $user["leveluser"] == $LEVEL_USER["MASTER"]);
 }
+function isMaster($user): bool
+{
+    global $LEVEL_USER;
+    return @$user['leveluser'] && $user["leveluser"] == $LEVEL_USER["MASTER"];
+}
+

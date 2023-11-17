@@ -12,8 +12,6 @@ if (!isAdmin($_SESSION["user"])) {
 
 $sql = "SELECT * FROM `tb_supplier`";
 $supplier = queryData($conn, $sql);
-
-
 $err = isset($_GET["err"]) ? $_GET["err"] : NULL;
 
 ?>

@@ -8,6 +8,7 @@ body {
 }
 
 .table-action {
+    --shadow: rgb(0 0 0 / 0.3);
     border: 1px solid #ccc;
     border-radius: 0.25rem;
     padding: 0.25rem 0.5rem;
@@ -24,7 +25,8 @@ body {
 }
 
 .table-action:first-child:hover {
-    box-shadow: 0 0 1rem 0 rgb(255 0 0 / 0.5);
+    --shadow: rgb(255 0 0 / 0.5);
+    box-shadow: 0 0 1rem 0 var(--shadow);
     color: rgb(170, 0, 0);
     transform: scale(1.05);
 }

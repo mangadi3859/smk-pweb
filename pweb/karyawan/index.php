@@ -34,7 +34,12 @@ $sql = queryData($conn, $query);
 <?php include "../components/navbar.php" ?>
 
     <main class="main-container">    
-        <a href="add.php" class="btn-add btn btn-primary">Tambah data</a>
+
+        <div class="btn-nav-container">
+            <a href="add.php" class="btn-add btn btn-primary"><i class="fas fa-plus"></i> Tambah data</a>
+            <a href="javascript:window.print()" class="btn-add btn btn-secondary print"><i class="fas fa-print"></i> Print</a>
+        </div>
+
         <div class='table-con'>
             <table>
                 <thead>
@@ -54,7 +59,8 @@ $sql = queryData($conn, $query);
 
                         $is_used = array_pop($data);
                         $attr_btn = $is_used ? "pointer-events: none; cursor: not-allowed; opacity: 0.35;" : "";
-                        $del_link = $is_used ? "api/delete.php?id={$data['idkaryawan']}" : "";
+                        // $del_link = $is_used ? "api/delete.php?id={$data['idkaryawan']}" : "javascript:void(0)";
+                        $del_link = "api/delete.php?id={$data['idkaryawan']}";
 
                         foreach ($data as $k => $val) {
                             $value = empty($val) ? "<a href='../register.php?ignoreAuth&redirect={$_SERVER['REQUEST_URI']}&k=${data['idkaryawan']}'><i style='opacity: .5'>Not Set~</i></a>" : $val;

@@ -15,7 +15,7 @@ $isLoggedIn = isAuth($conn);
             <a href="<?= $ROOT_PATH ?>/karyawan">Karyawan</a>
             <a href="<?= $ROOT_PATH ?>/pelanggan">Pelanggan</a>
             <a href="<?= $ROOT_PATH ?>/obat">Produk</a>
-            <a href="<?= $ROOT_PATH ?>/kontak.php">Kontak</a>
+            <a href="<?= $ROOT_PATH ?>/transaksi">Transaksi</a>
         </div>
         
         <?php

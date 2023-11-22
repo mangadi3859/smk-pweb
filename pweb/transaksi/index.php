@@ -1,13 +1,12 @@
 <?php
 require_once "../utils/conn.php";
 
-$query = "SELECT tb_pelanggan.idpelanggan AS idpelanggan, namalengkap, alamat, telp, usia, tb_transaksi.idpelanggan AS is_used
-FROM `tb_pelanggan`
-LEFT JOIN tb_transaksi 
-USING(idpelanggan)
-WHERE tb_pelanggan.namalengkap != 'UMUM'
-ORDER BY tb_pelanggan.idpelanggan ASC
+$query = "SELECT tb_transaksi.idtransaksi AS idtransaksi, tb_pelanggan.namalengkap AS nama_pelanggan, tb_karyawan.nama AS nama_karyawan, tb_transaksi.tgltransaksi AS tgltransaksi, tb_transaksi.kategoripelanggan AS kategoripelanggan, tb_transaksi.totalbayar AS totalbayar, tb_transaksi.bayar AS bayar, tb_transaksi.kembali AS kembali 
+FROM tb_transaksi
+JOIN tb_karyawan USING(idkaryawan)
+JOIN tb_pelanggan USING(idpelanggan)
 ";
+
 
 // $query = "SELECT idobat, perusahaan, namaobat, kategoriobat, hargajual, 
 // hargabeli, stok_obat, tbobat.keterangan AS keterangan, 
@@ -30,7 +29,7 @@ $sql = queryData($conn, $query);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karyawan</title>
+    <title>Transaksi</title>
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/home.css">
 </head>
@@ -40,7 +39,8 @@ $sql = queryData($conn, $query);
 
     <main class="main-container">
         <div class="btn-nav-container">
-            <a href="add.php" class="btn-add btn btn-primary"><i class="fas fa-plus"></i> Tambah data</a>
+            <a href="add.php" class="btn-add btn btn-primary"><i class="fas fa-plus"></i> Tambah transaksi</a>
+            <!-- <a href="transaction.php" class="btn-add btn btn-secondary"><i class="fas fa-cart-plus"></i> Tambah transaksi</a> -->
             <a href="javascript:window.print()" class="btn-add btn btn-secondary print"><i class="fas fa-print"></i> Print</a>
         </div>
         
@@ -48,11 +48,13 @@ $sql = queryData($conn, $query);
             <table>
                 <thead>
                     <th>#</th>
-                    <th>Nama Lengkap</th>
-                    <th>Alamat</th>
-                    <th>Nomer HP</th>
-                    <th>Usia</th>
-                    <th>Bukti Foto Resep</th>
+                    <th>Nama Pelanggan</th>
+                    <th>Nama Karyawan</th>
+                    <th>Tanggal Transaksi</th>
+                    <th>Tipe Transaksi</th>
+                    <th>Tagihan</th>
+                    <th>Bayar</th>
+                    <th>Kembalian</th>
                     <th class="action-head">Actions</th>
                 </thead>
                 <tbody>
@@ -61,21 +63,21 @@ $sql = queryData($conn, $query);
                         echo "<tr>";
                         $inner = "";
 
-                        $is_used = array_pop($data);
-                        $attr_btn = $is_used ? "pointer-events: none; cursor: not-allowed; opacity: 0.35;" : "";
-                        unset($data["buktifotoresep"]);
-
+                        $data["totalbayar"] = "Rp. " . number_format($data["totalbayar"], 0, ".", ",");
+                        $data["bayar"] = "Rp. " . number_format($data["bayar"], 0, ".", ",");
+                        $data["kembali"] = "Rp. " . number_format($data["kembali"], 0, ".", ",");
+                        // unset($data["buktifotoresep"]);
+                    
                         foreach ($data as $val) {
                             $inner .= "<td>" . $val . "</td>";
                         }
 
-                        $inner .= "<td><a href='buktifoto.php?id={$data["idpelanggan"]}'>See Picture</a></td>";
                         echo $inner;
                         echo <<<act
                     <td>
                         <div class='action-tb'>
-                            <a style="$attr_btn" class='table-action unselect' href='api/delete.php?id={$data['idpelanggan']}'>DELETE</a>
-                            <a class='table-action unselect' href='edit.php?id={$data['idpelanggan']}'>EDIT</a>
+                            <a class='table-action unselect' style="background-color: var(--accent-200); border-color: var(--accent-base); --shadow: var(--accent-base);" href='detail-transaksi.php?id={$data['idtransaksi']}'>VIEW</a>
+                            <a class='table-action unselect' href='edit.php?id={$data['idtransaksi']}'>EDIT</a>
                         </div>
                     </td> 
                     act;

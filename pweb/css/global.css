@@ -133,12 +133,53 @@ button,
     background-color: var(--accent-base);
 }
 
+.btn-grey {
+    color: black;
+    background-color: rgb(238, 75, 70);
+}
+
+.btn-secondary {
+    color: white;
+    background-color: var(--primary-base);
+}
+
 .btn-primary:where(:hover, :focus, .active) {
     color: white;
     background-color: var(--accent-600);
 }
 
+.btn-secondary:where(:hover, :focus, .active) {
+    color: white;
+    background-color: var(--primary-400);
+}
+
+.btn-nav-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-nav-container .btn i {
+    margin-right: 0.3rem;
+    font-size: 0.9rem;
+}
+
+/* .btn-nav-container .btn.print {
+    margin-left: auto;
+} */
+
 button,
 .unselect {
     user-select: none !important;
+}
+
+@media print {
+    .nav {
+        display: none;
+    }
+
+    .btn-nav-container {
+        display: none;
+    }
 }

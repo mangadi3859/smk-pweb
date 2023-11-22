@@ -19,12 +19,12 @@ $BACK_URL = "../";
 $id = (int) $_GET['id'];
 
 if (!isset($id) || is_nan($id)) {
-    header("Location: " . $BACK_URL);
+    exit(header("Location: " . $BACK_URL));
 }
 
 $query = "SELECT idkaryawan FROM tb_login WHERE idkaryawan = $id";
 if (!empty(queryData($conn, $query))) {
-    header("Location: " . $BACK_URL);
+    exit(header("Location: " . $BACK_URL));
 }
 
 try {

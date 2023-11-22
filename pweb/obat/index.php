@@ -40,7 +40,12 @@ $sql = queryData($conn, $query);
 <?php include "../components/navbar.php" ?>
 
     <main class="main-container">    
-        <a href="add.php" class="btn-add btn btn-primary">Tambah data</a>
+        
+        <div class="btn-nav-container">
+            <a href="add.php" class="btn-add btn btn-primary"><i class="fas fa-plus"></i> Tambah data</a>
+            <a href="javascript:window.print()" class="btn-add btn btn-secondary print"><i class="fas fa-print"></i> Print</a>
+        </div>
+
         <div class='table-con'>
             <table>
                 <thead>
@@ -60,8 +65,8 @@ $sql = queryData($conn, $query);
                         echo "<tr>";
                         $inner = "";
 
-                        $data["hargajual"] = "Rp. " . number_format($data["hargajual"], 2, ".", ",");
-                        $data["hargabeli"] = "Rp. " . number_format($data["hargabeli"], 2, ".", ",");
+                        $data["hargajual"] = "Rp. " . number_format($data["hargajual"], 0, ".", ",");
+                        $data["hargabeli"] = "Rp. " . number_format($data["hargabeli"], 0, ".", ",");
                         $is_used = array_pop($data) != NULL;
                         $attr_btn = $is_used ? "pointer-events: none; cursor: not-allowed; opacity: 0.35;" : "";
 

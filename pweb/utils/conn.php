@@ -62,6 +62,11 @@ function isAuth(mysqli $conn): bool
     if (empty($data))
         return false;
 
+    if (@$_SESSION["user"] && !is_array($_SESSION["user"])) {
+        unset($_SESSION["user"]);
+        return false;
+    }
+
     if (!isset($_SESSION["user"]) || $_SESSION["user"]["idkaryawan"] != $data[0]["idkaryawan"]) {
         $query = "SELECT * FROM tb_login WHERE username = '{$data[0]["username"]}'";
         $data = queryData($conn, $query);
